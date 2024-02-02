@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "658014675194",
+    "firebase_url": "https://rapidrescue-a4d8e-default-rtdb.firebaseio.com",
+    "project_id": "rapidrescue-a4d8e",
+    "storage_bucket": "rapidrescue-a4d8e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658014675194:android:ba654dbd35fc29e73ae943",
+        "android_client_info": {
+          "package_name": "com.example.rapidrescue"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK0m0MyOumTeZxdHlwSr8f0B5ydnrbUZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
