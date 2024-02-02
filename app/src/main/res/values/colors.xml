@@ -11,4 +11,14 @@
     <color name="btn_color">#FF735C</color>
     <color name="edit_text_color">#FFD6CF</color>
     <color name="hint_text_color">#D4D4D4</color>
+
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="_bg__android_large___4_color">#0F0F0F</color>
+    <color name="_bg__frame_12_ek1_color">#000000</color>
+    <color name="_bg__frame_1_ek1_color">#1E1E1E</color>
+    <color name="add_color">#FFFFFF</color>
+    <color name="emergency_numbers_color">#00E6C5</color>
 </resources>
