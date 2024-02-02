@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.ui.add.AddDataModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 
-class YourFragment : Fragment() {
+class AddFragment : Fragment() {
 
     private lateinit var databaseReference: DatabaseReference
     private lateinit var nameEditText: EditText
@@ -28,7 +30,7 @@ class YourFragment : Fragment() {
         phoneNumberEditText = view.findViewById(R.id.phone_number)
         uploadButton = view.findViewById(R.id.uploadButton)
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Info")
+        databaseReference = FirebaseDatabase.getInstance().getReference("Name & Number")
 
         uploadButton.setOnClickListener {
             uploadData()
@@ -57,7 +59,14 @@ class YourFragment : Fragment() {
             // Optionally, you can clear the fields after uploading
             nameEditText.text.clear()
             phoneNumberEditText.text.clear()
+
+            navigateToYourNextFragment()
         }
+    }
+
+    private fun navigateToYourNextFragment() {
+        // Use NavController to navigate to the next fragment
+        findNavController().navigate(R.id.action_addFragment_to_registeredNumbersFragment2)
     }
 }
 

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_registeredNumbersFragment"
             app:destination="@id/registeredNumbersFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
 
     <fragment
@@ -26,9 +29,21 @@
         android:name="com.example.rapidrescue.ui.notifications.ProfileFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_profile" />
+
     <fragment
         android:id="@+id/registeredNumbersFragment"
         android:name="com.example.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment"
         android:label="fragment_registered_numbers"
         tools:layout="@layout/fragment_registered_numbers" />
+
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="AddFragment"
+        android:label="AddFragment"
+        tools:layout="@layout/fragment_add">
+        <action
+            android:id="@+id/action_addFragment_to_registeredNumbersFragment2"
+            app:destination="@id/registeredNumbersFragment" />
+    </fragment>
+
 </navigation>
