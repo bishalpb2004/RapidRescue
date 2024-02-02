@@ -22,4 +22,9 @@
         android:name="com.example.rapidrescue.ui.notifications.ProfileFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/registeredNumbersFragment"
+        android:name="com.example.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment"
+        android:label="fragment_registered_numbers"
+        tools:layout="@layout/fragment_registered_numbers" />
 </navigation>
