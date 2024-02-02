@@ -53,17 +53,17 @@
 
 
         <ImageView
-            android:id="@+id/editTask"
+            android:id="@+id/editNumber"
             android:layout_width="30sp"
             android:layout_height="30sp"
             android:layout_marginEnd="12dp"
             android:src="@drawable/vector"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/deleteTask"
+            app:layout_constraintEnd_toStartOf="@id/deleteNumber"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/deleteTask"
+            android:id="@+id/deleteNumber"
             android:layout_width="30sp"
             android:layout_height="30sp"
             android:layout_marginEnd="16dp"
