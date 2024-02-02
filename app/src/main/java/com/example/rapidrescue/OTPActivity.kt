@@ -27,7 +27,6 @@ class OTPActivity : AppCompatActivity() {
     private lateinit var inputOTP5: EditText
     private lateinit var inputOTP6: EditText
     private lateinit var progressBar: ProgressBar
-
     private lateinit var OTP: String
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var phoneNumber: String
