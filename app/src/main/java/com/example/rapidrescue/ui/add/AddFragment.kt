@@ -28,7 +28,7 @@ class YourFragment : Fragment() {
         phoneNumberEditText = view.findViewById(R.id.phone_number)
         uploadButton = view.findViewById(R.id.uploadButton)
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("")
+        databaseReference = FirebaseDatabase.getInstance().getReference("Info")
 
         uploadButton.setOnClickListener {
             uploadData()
