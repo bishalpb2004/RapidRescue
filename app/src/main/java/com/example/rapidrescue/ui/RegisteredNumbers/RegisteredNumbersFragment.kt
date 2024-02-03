@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentRegisteredNumbersBinding
 import com.example.rapidrescue.ui.PopUpFragment
 import com.example.rapidrescue.ui.add.AddAdapter
@@ -71,6 +72,8 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
         init(view)
         getDataFromFirebase()
         registerEvents()
+
+
     }
 
     private fun registerEvents() {
@@ -97,6 +100,23 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
                         mList.add(registeredNumber)
                     }
                 }
+                val adapter=AddAdapter(mList)
+                binding.recyclerView.adapter=adapter
+                adapter.setListener(object:AddAdapter.AddAdapterClicksInterface{
+                    override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
+                        TODO("Not yet implemented")
+                    }
+
+
+                    override fun onItemClick(position: Int) {
+                        navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
+                    }
+
+                })
                 adapter.notifyDataSetChanged()
             }
 
@@ -154,6 +174,10 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
 
     override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
 
+    }
+
+    override fun onItemClick(position: Int) {
+        navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
     }
 
 }

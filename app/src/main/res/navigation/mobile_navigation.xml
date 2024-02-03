@@ -34,7 +34,11 @@
         android:id="@+id/registeredNumbersFragment"
         android:name="com.example.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment"
         android:label="fragment_registered_numbers"
-        tools:layout="@layout/fragment_registered_numbers" />
+        tools:layout="@layout/fragment_registered_numbers" >
+        <action
+            android:id="@+id/action_registeredNumbersFragment_to_SOSMessageFragment"
+            app:destination="@id/SOSMessageFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/addFragment"
@@ -49,5 +53,9 @@
         android:id="@+id/popUpFragment"
         android:name="com.example.rapidrescue.ui.PopUpFragment"
         android:label="PopUpFragment" />
+    <fragment
+        android:id="@+id/SOSMessageFragment"
+        android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessageFragment"
+        android:label="SOSMessageFragment" />
 
 </navigation>

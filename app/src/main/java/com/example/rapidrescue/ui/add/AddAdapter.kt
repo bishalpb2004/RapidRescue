@@ -1,8 +1,10 @@
 package com.example.rapidrescue.ui.add
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.EachItemBinding
 
 class AddAdapter(private val list:MutableList<AddDataModel>)
@@ -12,13 +14,20 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
     fun setListener(listener:AddAdapter.AddAdapterClicksInterface){
         this.listener=listener
     }
-    inner class AddViewHolder(val binding:EachItemBinding)
-            :RecyclerView.ViewHolder(binding.root)
+    inner class AddViewHolder(itemView: View, val binding:EachItemBinding,clickListener: AddAdapterClicksInterface) :RecyclerView.ViewHolder(binding.root){
+
+        init {
+            itemView.setOnClickListener {
+                clickListener.onItemClick(adapterPosition)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddViewHolder {
-        val binding=EachItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return AddViewHolder(binding)
+        val binding = EachItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return AddViewHolder(binding.root, binding, listener!!)
     }
+
 
 
     override fun onBindViewHolder(holder: AddViewHolder, position: Int) {
@@ -44,6 +53,7 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
     interface AddAdapterClicksInterface{
         fun onDeleteNumberBtnClicked(addNumberData: AddDataModel)
         fun onEditNumberBtnClicked(addNumberData: AddDataModel)
+        fun onItemClick(position:Int)
     }
 
 }
