@@ -55,7 +55,8 @@
         android:label="PopUpFragment" />
     <fragment
         android:id="@+id/SOSMessageFragment"
-        android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessageFragment"
-        android:label="SOSMessageFragment" />
+        android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessage"
+        android:label="SOSMessageFragment"
+        tools:layout="@layout/fragment_s_o_s_message"/>
 
 </navigation>

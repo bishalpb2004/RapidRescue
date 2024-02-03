@@ -1,7 +1,10 @@
 package com.example.rapidrescue.ui.SOSMessage
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.telephony.SmsManager
 import android.view.LayoutInflater
@@ -13,10 +16,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.rapidrescue.R
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.messaging.FirebaseMessaging
 
-class SOSMessageFragment : Fragment() {
+class SOSMessage : Fragment() {
 
     private val SMS_PERMISSION_CODE = 100
     private lateinit var messageEditText: EditText
@@ -43,13 +44,20 @@ class SOSMessageFragment : Fragment() {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
                     Manifest.permission.SEND_SMS
+                ) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                sendSMS(message)
+                sendSMSWithLocation(message)
             } else {
                 ActivityCompat.requestPermissions(
                     requireActivity(),
-                    arrayOf(Manifest.permission.SEND_SMS),
+                    arrayOf(
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ),
                     SMS_PERMISSION_CODE
                 )
             }
@@ -58,15 +66,42 @@ class SOSMessageFragment : Fragment() {
         }
     }
 
-    private fun sendSMS(message: String) {
+    private fun sendSMSWithLocation(message: String) {
         try {
             val smsManager: SmsManager = SmsManager.getDefault()
-            smsManager.sendTextMessage("PHONE_NUMBER", null, message, null, null)
+            val location = getCurrentLocation()
+            val finalMessage = "$message\n\nLocation: $location"
+            smsManager.sendTextMessage("PHONE_NUMBER", null, finalMessage, null, null)
             Toast.makeText(requireContext(), "Message sent successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Failed to send message", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
         }
+    }
+
+    private fun getCurrentLocation(): String {
+        // Check if the location permission is granted
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Get the user's current location
+            val locationManager =
+                requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+            val location: Location? =
+                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+            // Check if location is available
+            if (location != null) {
+                val latitude = location.latitude
+                val longitude = location.longitude
+                return "Latitude: $latitude, Longitude: $longitude"
+            }
+        }
+
+        return "Location not available"
     }
 
     override fun onRequestPermissionsResult(
@@ -76,12 +111,19 @@ class SOSMessageFragment : Fragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == SMS_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, send the message
+            if (grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                grantResults[1] == PackageManager.PERMISSION_GRANTED
+            ) {
+                // Permissions granted, send the message with location
                 val message = messageEditText.text.toString().trim()
-                sendSMS(message)
+                sendSMSWithLocation(message)
             } else {
-                Toast.makeText(requireContext(), "Permission denied to send SMS", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Permission denied to send SMS or access location",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
