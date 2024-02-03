@@ -4,8 +4,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.ui.add.AddDataModel
@@ -44,7 +44,7 @@ class AddFragment : Fragment() {
         val phoneNumber = phoneNumberEditText.text.toString().trim()
 
         // Check if the fields are not empty
-        if (name.isNotEmpty() && phoneNumber.isNotEmpty()) {
+        if (name.isNotEmpty() && phoneNumber.length == 10) {
             // Create a unique key for each entry
             val entryKey = databaseReference.push().key
 
@@ -54,19 +54,36 @@ class AddFragment : Fragment() {
             // Upload the data to Firebase Database
             entryKey?.let {
                 databaseReference.child(it).setValue(dataModel)
+                    .addOnSuccessListener {
+                        // Data upload successful
+                        showToast("Number added successfully")
+                    }
+                    .addOnFailureListener {
+                        // Data upload unsuccessful
+                        showToast("Failed to upload Number")
+                    }
             }
-
-            // Optionally, you can clear the fields after uploading
+            //clear the fields after uploading
             nameEditText.text.clear()
             phoneNumberEditText.text.clear()
 
             navigateToYourNextFragment()
+        }
+        else if(name.isEmpty()){
+            showToast("Enter a Name")
+        }
+        else if(phoneNumber.length != 10){
+            showToast("Enter a valid Phone number")
         }
     }
 
     private fun navigateToYourNextFragment() {
         // Use NavController to navigate to the next fragment
         findNavController().navigate(R.id.action_addFragment_to_registeredNumbersFragment2)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }
 
