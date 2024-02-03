@@ -21,7 +21,6 @@ class SOSMessage : Fragment() {
 
     private val SMS_PERMISSION_CODE = 100
     private lateinit var messageEditText: EditText
-    private lateinit var phoneNumberEditText: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -151,22 +151,19 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
         binding.recyclerView.adapter=adapter
     }
 
-    override fun onSaveTask(phoneNumber: String,phoneNumberEt: EditText) {
-
-        databaseReference.push().setValue(phoneNumber).addOnCompleteListener {
-            if (it.isSuccessful){
-
-                Toast.makeText(context,"Todo saved successfully",Toast.LENGTH_SHORT).show()
-                phoneNumberEt.text=null
-
-            }else{
-                Toast.makeText(context,it.exception?.message,Toast.LENGTH_SHORT).show()
-
+    override fun onSaveTask(name: String, phoneNumber: String, phoneNumberEt: EditText) {
+        databaseReference.push().setValue(AddDataModel(name, phoneNumber))
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Toast.makeText(context, "Data added successfully", Toast.LENGTH_SHORT).show()
+                    phoneNumberEt.text = null
+                } else {
+                    Toast.makeText(context, it.exception?.message, Toast.LENGTH_SHORT).show()
+                }
+                popUpFragment.dismiss()
             }
-
-            popUpFragment.dismiss()
-        }
     }
+
 
     override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
         databaseReference.child(addNumberData.name).removeValue().addOnCompleteListener {

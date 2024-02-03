@@ -30,11 +30,13 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
 
 
 
+    // ... (Existing code remains unchanged)
+
     override fun onBindViewHolder(holder: AddViewHolder, position: Int) {
         with(holder){
             with(list[position]){
-                binding.registeredName.text=this.name
-                binding.registeredNumber.text=this.phoneNumber
+                binding.registeredName.text = this.name
+                binding.registeredNumber.text = this.phoneNumber
                 binding.deleteNumber.setOnClickListener {
                     listener?.onDeleteNumberBtnClicked(this)
                 }
@@ -46,6 +48,7 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
         }
 
     }
+
 
     override fun getItemCount(): Int {
         return list.size
