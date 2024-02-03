@@ -15,9 +15,16 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
+import com.example.rapidrescue.ui.RegisteredNumbers.SharedViewModel
 
 class SOSMessage : Fragment() {
+
+    private val sharedViewModel: SharedViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+    }
 
     private val SMS_PERMISSION_CODE = 100
     private lateinit var messageEditText: EditText
@@ -42,6 +49,9 @@ class SOSMessage : Fragment() {
 
     private fun sendMessage() {
         val message = messageEditText.text.toString().trim()
+        val _selectedPhoneNumber = sharedViewModel.selectedPhoneNumber.toString()
+        val selectedPhoneNumber1 = _selectedPhoneNumber.removeRange(0,13)
+        val selectedPhoneNumber = selectedPhoneNumber1.removeRange(10, 20)
         if (message.isNotEmpty()) {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
@@ -52,7 +62,9 @@ class SOSMessage : Fragment() {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                sendSMSWithLocation(message)
+                    sendSMSWithLocation(message, selectedPhoneNumber)
+
+                navigateBack()
             } else {
                 ActivityCompat.requestPermissions(
                     requireActivity(),
@@ -68,12 +80,12 @@ class SOSMessage : Fragment() {
         }
     }
 
-    private fun sendSMSWithLocation(message: String) {
+    private fun sendSMSWithLocation(message: String, phoneNumber: String) {
         try {
             val smsManager: SmsManager = SmsManager.getDefault()
             val location = getCurrentLocation()
             val finalMessage = "$message\n\nLocation: $location"
-            smsManager.sendTextMessage("9394297802", null, finalMessage, null, null)
+            smsManager.sendTextMessage(phoneNumber, null, finalMessage, null, null)
             Toast.makeText(requireContext(), "Message sent successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Failed to send message", Toast.LENGTH_SHORT).show()
@@ -120,7 +132,9 @@ class SOSMessage : Fragment() {
             ) {
                 // Permissions granted, send the message with location
                 val message = messageEditText.text.toString().trim()
-                sendSMSWithLocation(message)
+                val selectedNumber = sharedViewModel.selectedPhoneNumber.toString()
+
+                    sendSMSWithLocation(message, selectedNumber)
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -129,5 +143,9 @@ class SOSMessage : Fragment() {
                 ).show()
             }
         }
+    }
+
+    private fun navigateBack(){
+        findNavController().navigate(R.id.action_SOSMessageFragment_to_registeredNumbersFragment)
     }
 }

@@ -45,6 +45,11 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var communicator: Communicator
+
+    private val sharedViewModel: SharedViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -126,6 +131,8 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
 
 
                     override fun onItemClick(position: Int) {
+                        val selectedNumber = mList[position].phoneNumber
+                        sharedViewModel.selectedPhoneNumber = selectedNumber
                         navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
                     }
 

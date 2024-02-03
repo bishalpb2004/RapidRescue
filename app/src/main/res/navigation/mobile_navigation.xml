@@ -66,8 +66,12 @@
     </dialog>
     <fragment
         android:id="@+id/SOSMessageFragment"
-        android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessageFragment"
-        android:label="SOSMessageFragment" />
+        android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessage"
+        android:label="SOSMessageFragment" >
+        <action
+            android:id="@+id/action_SOSMessageFragment_to_registeredNumbersFragment"
+            app:destination="@id/registeredNumbersFragment" />
+    </fragment>
     <fragment
         android:id="@+id/afterProfileFragment"
         android:name="com.example.rapidrescue.ui.AfterProfileFragment"
