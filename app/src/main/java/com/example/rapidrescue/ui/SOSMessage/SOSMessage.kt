@@ -13,7 +13,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.rapidrescue.R
-import com.google.android.material.card.MaterialCardView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 
 class SOSMessageFragment : Fragment() {
 
@@ -29,7 +30,7 @@ class SOSMessageFragment : Fragment() {
         messageEditText = view.findViewById(R.id.messageEditText)
 
         // Set OnClickListener for the "Send Message" button
-        view.findViewById<MaterialCardView>(R.id.sendMessageButton).setOnClickListener {
+        view.findViewById<View>(R.id.sendMessageButton).setOnClickListener {
             sendMessage()
         }
 
