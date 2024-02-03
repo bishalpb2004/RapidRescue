@@ -44,6 +44,7 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
                 }
             }
         }
+
     }
 
     override fun getItemCount(): Int {

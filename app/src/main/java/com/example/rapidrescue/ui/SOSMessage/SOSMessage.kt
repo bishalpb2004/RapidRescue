@@ -73,12 +73,13 @@ class SOSMessage : Fragment() {
             val smsManager: SmsManager = SmsManager.getDefault()
             val location = getCurrentLocation()
             val finalMessage = "$message\n\nLocation: $location"
-            smsManager.sendTextMessage("PHONE_NUMBER", null, finalMessage, null, null)
+            smsManager.sendTextMessage("9394297802", null, finalMessage, null, null)
             Toast.makeText(requireContext(), "Message sent successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Failed to send message", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
         }
+
     }
 
     private fun getCurrentLocation(): String {

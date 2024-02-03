@@ -104,11 +104,20 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
                 binding.recyclerView.adapter=adapter
                 adapter.setListener(object:AddAdapter.AddAdapterClicksInterface{
                     override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
-                        TODO("Not yet implemented")
+                        databaseReference.child(addNumberData.name).removeValue().addOnCompleteListener {
+                            if (it.isSuccessful){
+                                Toast.makeText(context,"Deleted Successfully",Toast.LENGTH_SHORT).show()
+
+                            }
+                            else{
+
+                                Toast.makeText(context,it.exception?.message,Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
                     }
 
                     override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
-                        TODO("Not yet implemented")
                     }
 
 
@@ -117,7 +126,9 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
                     }
 
                 })
-                adapter.notifyDataSetChanged()
+                requireActivity().runOnUiThread {
+                    adapter.notifyDataSetChanged()
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -130,7 +141,7 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
     private fun init(view: View) {
         navController=Navigation.findNavController(view)
         auth=FirebaseAuth.getInstance()
-        databaseReference= FirebaseDatabase.getInstance().reference.child("Name & Number")
+        databaseReference= getInstance().reference.child("Name & Number")
             .child(auth.currentUser?.uid.toString())
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager=LinearLayoutManager(context)
@@ -160,7 +171,6 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
     override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
         databaseReference.child(addNumberData.name).removeValue().addOnCompleteListener {
             if (it.isSuccessful){
-
                 Toast.makeText(context,"Deleted Successfully",Toast.LENGTH_SHORT).show()
 
             }
