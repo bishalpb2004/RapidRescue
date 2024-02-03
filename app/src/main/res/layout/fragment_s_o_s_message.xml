@@ -65,6 +65,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/messageEditText"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="#1E1E1E"
@@ -76,6 +77,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/sendMessageButton"
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:layout_margin="10sp"

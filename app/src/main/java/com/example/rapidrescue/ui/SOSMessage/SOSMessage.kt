@@ -1,56 +1,87 @@
 package com.example.rapidrescue.ui.SOSMessage
 
-import androidx.lifecycle.ViewModelProvider
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.telephony.SmsManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import android.widget.EditText
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.rapidrescue.R
-import com.example.rapidrescue.databinding.FragmentRegisteredNumbersBinding
-import com.example.rapidrescue.databinding.FragmentSOSMessageBinding
-import com.example.rapidrescue.ui.notifications.ProfileViewModel
+import com.google.android.material.card.MaterialCardView
 
-class  SOSMessage : Fragment() {
+class SOSMessageFragment : Fragment() {
 
-    private lateinit var navController: NavController
-    private var _binding: FragmentSOSMessageBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val SMS_PERMISSION_CODE = 100
+    private lateinit var messageEditText: EditText
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_s_o_s_message, container, false)
 
-        _binding = FragmentSOSMessageBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        messageEditText = view.findViewById(R.id.messageEditText)
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // Set OnClickListener for the "Send Message" button
+        view.findViewById<MaterialCardView>(R.id.sendMessageButton).setOnClickListener {
+            sendMessage()
         }
-        return root
+
+        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun sendMessage() {
+        val message = messageEditText.text.toString().trim()
+        if (message.isNotEmpty()) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.SEND_SMS
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                sendSMS(message)
+            } else {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.SEND_SMS),
+                    SMS_PERMISSION_CODE
+                )
+            }
+        } else {
+            Toast.makeText(requireContext(), "Please enter a message", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        navController= Navigation.findNavController(view)
-
+    private fun sendSMS(message: String) {
+        try {
+            val smsManager: SmsManager = SmsManager.getDefault()
+            smsManager.sendTextMessage("PHONE_NUMBER", null, message, null, null)
+            Toast.makeText(requireContext(), "Message sent successfully", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Failed to send message", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+        }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == SMS_PERMISSION_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, send the message
+                val message = messageEditText.text.toString().trim()
+                sendSMS(message)
+            } else {
+                Toast.makeText(requireContext(), "Permission denied to send SMS", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }
