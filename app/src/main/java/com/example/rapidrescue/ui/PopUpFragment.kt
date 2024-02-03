@@ -58,19 +58,23 @@ class PopUpFragment : DialogFragment() {
         binding.uploadButton.setOnClickListener {
             val name = binding.name.text.toString().trim()
             val number = binding.phoneNumber.text.toString().trim()
-            if (number.isNotEmpty() && name.isNotEmpty()) {
+            if (number.length==10 && name.isNotEmpty()) {
                 if (numberData == null) {
                     listener.onSaveTask(name, number, binding.phoneNumber)
                 } else {
                     numberData?.name = name
                     numberData?.phoneNumber = number
                 }
-            } else {
+            } else if (number.isEmpty()) {
                 Toast.makeText(
                     context,
-                    "Please enter both name and number to save your life from danger",
+                    "Please enter a Name",
                     Toast.LENGTH_LONG
                 ).show()
+            }else if (number.length!=10){
+                Toast.makeText(context,
+                    "Enter a valid number",
+                    Toast.LENGTH_LONG).show()
             }
         }
     }
