@@ -14,7 +14,7 @@ import com.example.rapidrescue.databinding.FragmentRegisteredNumbersBinding
 import com.example.rapidrescue.databinding.FragmentSOSMessageBinding
 import com.example.rapidrescue.ui.notifications.ProfileViewModel
 
-class SOSMessage : Fragment() {
+class  SOSMessage : Fragment() {
 
     private lateinit var navController: NavController
     private var _binding: FragmentSOSMessageBinding? = null
