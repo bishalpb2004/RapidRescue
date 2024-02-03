@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
+import com.example.rapidrescue.databinding.FragmentAddBinding
 import com.example.rapidrescue.ui.add.AddDataModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -19,6 +20,8 @@ class AddFragment : Fragment() {
     private lateinit var nameEditText: EditText
     private lateinit var phoneNumberEditText: EditText
     private lateinit var uploadButton: Button
+    private var addData:AddDataModel?=null
+    private lateinit var binding:FragmentAddBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +40,25 @@ class AddFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (arguments!=null){
+            addData=AddDataModel(
+                arguments?.getString("name").toString(),
+                arguments?.getString("phoneNumber").toString()
+            )
+            binding.name.setText(addData?.name)
+
+        }
+        registerEvents()
+    }
+
+    private fun registerEvents() {
+
+
     }
 
     private fun uploadData() {

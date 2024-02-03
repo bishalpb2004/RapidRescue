@@ -48,11 +48,11 @@ class HomeFragment : Fragment() {
 
         navController=Navigation.findNavController(view)
 
-        binding.linearLayout5.setOnClickListener {
-            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
-        }
+//        binding.linearLayout5.setOnClickListener {
+//            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
+//        }
         binding.linearLayout3.setOnClickListener{
-            navController.navigate(R.id.action_navigation_home_to_addFragment)
+            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
         }
     }
 }

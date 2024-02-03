@@ -14,8 +14,8 @@
             android:id="@+id/action_navigation_home_to_registeredNumbersFragment"
             app:destination="@id/registeredNumbersFragment" />
         <action
-            android:id="@+id/action_navigation_home_to_addFragment"
-            app:destination="@id/addFragment" />
+            android:id="@+id/action_navigation_home_to_popUpFragment"
+            app:destination="@id/popUpFragment" />
     </fragment>
 
     <fragment
@@ -45,5 +45,9 @@
             android:id="@+id/action_addFragment_to_registeredNumbersFragment2"
             app:destination="@id/registeredNumbersFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/popUpFragment"
+        android:name="com.example.rapidrescue.ui.PopUpFragment"
+        android:label="PopUpFragment" />
 
 </navigation>

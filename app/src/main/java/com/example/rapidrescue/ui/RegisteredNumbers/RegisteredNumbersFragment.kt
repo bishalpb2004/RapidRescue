@@ -1,21 +1,40 @@
 package com.example.rapidrescue.ui.RegisteredNumbers
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.rapidrescue.R
-import com.example.rapidrescue.databinding.FragmentProfileBinding
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rapidrescue.databinding.FragmentRegisteredNumbersBinding
+import com.example.rapidrescue.ui.PopUpFragment
+import com.example.rapidrescue.ui.add.AddAdapter
+import com.example.rapidrescue.ui.add.AddDataModel
 import com.example.rapidrescue.ui.notifications.ProfileViewModel
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.FirebaseDatabase.*
+import com.google.firebase.database.ValueEventListener
 
-class RegisteredNumbersFragment : Fragment() {
+class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickListener,
+    AddAdapter.AddAdapterClicksInterface {
 
+    private lateinit var auth:FirebaseAuth
+    private lateinit var databaseReference:DatabaseReference
+    private lateinit var adapter:AddAdapter
+    private lateinit var popUpFragment: PopUpFragment
+    private lateinit var mList:MutableList<AddDataModel>
     private lateinit var navController: NavController
     private var _binding: FragmentRegisteredNumbersBinding? = null
 
@@ -49,7 +68,91 @@ class RegisteredNumbersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        init(view)
+        getDataFromFirebase()
+        registerEvents()
+    }
+
+    private fun registerEvents() {
+        binding.addBtnRegister.setOnClickListener {
+            popUpFragment= PopUpFragment()
+            popUpFragment.setListener(this)
+            popUpFragment.show(
+                childFragmentManager,
+                "PopUpFragment"
+            )
+        }
+    }
+
+    private fun getDataFromFirebase() {
+        databaseReference.addValueEventListener(object : ValueEventListener{
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                mList.clear()
+                for (numberSnapshot in snapshot.children){
+                    val registeredNumber=numberSnapshot.key?.let {
+                        AddDataModel(it,numberSnapshot.value.toString())
+                    }
+                    if (registeredNumber!=null){
+                        mList.add(registeredNumber)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context,error.message,Toast.LENGTH_LONG).show()
+            }
+        })
+
+    }
+
+    private fun init(view: View) {
         navController=Navigation.findNavController(view)
+        auth=FirebaseAuth.getInstance()
+        databaseReference= FirebaseDatabase.getInstance().reference.child("Name & Number")
+            .child(auth.currentUser?.uid.toString())
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.layoutManager=LinearLayoutManager(context)
+        mList= mutableListOf()
+        adapter=AddAdapter(mList)
+        adapter.setListener(this)
+        binding.recyclerView.adapter=adapter
+    }
+
+    override fun onSaveTask(phoneNumber: String,phoneNumberEt: EditText) {
+
+        databaseReference.push().setValue(phoneNumber).addOnCompleteListener {
+            if (it.isSuccessful){
+
+                Toast.makeText(context,"Todo saved successfully",Toast.LENGTH_SHORT).show()
+                phoneNumberEt.text=null
+
+            }else{
+                Toast.makeText(context,it.exception?.message,Toast.LENGTH_SHORT).show()
+
+            }
+
+            popUpFragment.dismiss()
+        }
+    }
+
+    override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
+        databaseReference.child(addNumberData.name).removeValue().addOnCompleteListener {
+            if (it.isSuccessful){
+
+                Toast.makeText(context,"Deleted Successfully",Toast.LENGTH_SHORT).show()
+
+            }
+            else{
+
+                Toast.makeText(context,it.exception?.message,Toast.LENGTH_SHORT).show()
+
+            }
+        }
+    }
+
+    override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
 
     }
 
