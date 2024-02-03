@@ -38,7 +38,7 @@
                     android:layout_marginBottom="75dp"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/textview"
+                        android:id="@+id/emergencyDel"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp"
                         android:layout_marginBottom="8dp"
@@ -152,49 +152,6 @@
                     />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/linear_layout4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black"
-                android:paddingVertical="27dp"
-                android:paddingHorizontal="62dp"
-                android:layout_marginBottom="9dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:id="@+id/r9b0e9wlvrt9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="11dp"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/r5pr5idyegki"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_marginEnd="17dp"
-                        android:src="@drawable/img_3"
-                        android:scaleType="fitXY"
-                        />
-                    <TextView
-                        android:id="@+id/delete_em_num"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:text="Delete"
-                        />
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/emergency_del"
-                    android:textColor="#00E6C5"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Emergency Numbers"
-                    />
-            </LinearLayout>
-            <LinearLayout
                 android:id="@+id/linear_layout5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -244,7 +201,7 @@
                     />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/rack6hf8y3w"
+                android:id="@+id/knowInstructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/black"
