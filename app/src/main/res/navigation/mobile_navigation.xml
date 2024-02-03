@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_home_to_popUpFragment"
             app:destination="@id/popUpFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_instructionsFragment"
+            app:destination="@id/instructionsFragment" />
     </fragment>
 
     <fragment
@@ -76,6 +79,14 @@
         android:id="@+id/afterProfileFragment"
         android:name="com.example.rapidrescue.ui.AfterProfileFragment"
         android:label="fragment_after_profile"
-        tools:layout="@layout/fragment_after_profile" />
+        tools:layout="@layout/fragment_after_profile" >
+        <action
+            android:id="@+id/action_afterProfileFragment_to_navigation_notifications"
+            app:destination="@id/navigation_notifications" />
+    </fragment>
+    <fragment
+        android:id="@+id/instructionsFragment"
+        android:name="com.example.rapidrescue.ui.Instructions.InstructionsFragment"
+        android:label="InstructionsFragment" />
 
 </navigation>

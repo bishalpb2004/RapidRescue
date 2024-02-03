@@ -5,56 +5,96 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
+import com.example.rapidrescue.databinding.FragmentAfterProfileBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AfterProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AfterProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var binding:FragmentAfterProfileBinding
+    private lateinit var databaseRef:DatabaseReference
+    private lateinit var navController: NavController
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_after_profile, container, false)
+        binding= FragmentAfterProfileBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BeforeProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AfterProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        navController=Navigation.findNavController(view)
+
+        val name=binding.nameEtProfile.text.toString()
+        val schId=binding.scholarNumberProfile.text.toString()
+        val phNumber=binding.phoneNumberProfile.text.toString()
+
+        val user=User(name,schId,phNumber)
+        databaseRef=FirebaseDatabase.getInstance().getReference("Users")
+
+        binding.btnSaveProfile.setOnClickListener {
+            uploadData()
+        }
+    }
+
+    private fun uploadData() {
+        val name=binding.nameEtProfile.text.toString().trim()
+        val schId=binding.scholarNumberProfile.text.toString().trim()
+        val phNumber=binding.phoneNumberProfile.text.toString().trim()
+
+        if (name.isNotEmpty() && schId.isNotEmpty() &&  phNumber.length==10){
+            val entryKey=databaseRef.push().key
+
+            val userModel=User(name,schId,phNumber)
+
+            entryKey?.let {
+                databaseRef.child(it).setValue(userModel)
+                    .addOnCompleteListener {
+
+                        Toast.makeText(context,"User added successfully",Toast.LENGTH_LONG).show()
+
+                }.addOnFailureListener {
+                        Toast.makeText(context,"User could not be added ",Toast.LENGTH_LONG).show()
+
                 }
             }
+            binding.nameEtProfile.text?.clear()
+            binding.scholarNumberProfile.text?.clear()
+            binding.phoneNumberProfile.text?.clear()
+
+            navigateToNextFragment()
+            makeButtonInvisible()
+        }else if (name.isEmpty()){
+            Toast.makeText(context,"Fill up your name",Toast.LENGTH_SHORT).show()
+
+        }
+        else if (schId.isEmpty()){
+            Toast.makeText(context,"Fill up your scholar id",Toast.LENGTH_SHORT).show()
+        }
+        else if (phNumber.length!=10) {
+            Toast.makeText(context,"Enter a valid phone number",Toast.LENGTH_SHORT).show()
+
+        }
+
     }
+
+    private fun makeButtonInvisible() {
+        binding.btnSaveProfile.visibility=View.GONE
+    }
+
+    private fun navigateToNextFragment() {
+        findNavController().navigate(R.id.action_afterProfileFragment_to_navigation_notifications)
+    }
+
+
 }

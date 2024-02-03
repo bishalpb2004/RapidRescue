@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentHomeBinding
 
@@ -53,6 +54,9 @@ class HomeFragment : Fragment() {
         }
         binding.linearLayout3.setOnClickListener{
             navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
+        }
+        binding.knowInstructions.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
         }
     }
 }

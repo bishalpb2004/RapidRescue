@@ -4,12 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#000000"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notifications.ProfileFragment">
 
+
     <Button
+        android:visibility="visible"
         android:id="@+id/btnAccessAfterProfile"
         android:backgroundTint="#00E6C5"
         android:text="Create Your Profile"
