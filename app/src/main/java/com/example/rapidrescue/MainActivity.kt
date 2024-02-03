@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rapidrescue.databinding.ActivityMainBinding
+import com.example.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val registerNumberFragment=RegisteredNumbersFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,registerNumberFragment).commit()
 
         val navView: BottomNavigationView = binding.navView
 

@@ -1,11 +1,16 @@
 package com.example.rapidrescue.ui.add
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.EachItemBinding
+import com.example.rapidrescue.ui.SOSMessage.SOSMessage
+import kotlinx.coroutines.NonDisposableHandle.parent
+
+
 
 class AddAdapter(private val list:MutableList<AddDataModel>)
     :RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
@@ -30,7 +35,7 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
 
 
 
-    override fun onBindViewHolder(holder: AddViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AddAdapter.AddViewHolder, position: Int) {
         with(holder){
             with(list[position]){
                 binding.registeredName.text=this.name
@@ -43,6 +48,7 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
                     listener?.onEditNumberBtnClicked(this)
                 }
             }
+
         }
 
     }
