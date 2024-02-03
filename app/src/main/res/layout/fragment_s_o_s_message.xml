@@ -68,9 +68,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="#1E1E1E"
-                android:text="Your Message"
+                android:hint="Your Message"
                 android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF" />
+                android:textColorHint="#FFFFFF"
+                />
         </com.google.android.material.textfield.TextInputLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -79,13 +80,14 @@
         android:layout_height="60sp"
         android:layout_margin="10sp"
         app:cardCornerRadius="10sp"
-        android:backgroundTint="#00E6C5">
+        android:backgroundTint="@color/teal_200">
 
         <TextView
             android:layout_gravity="center"
-            android:text="Save Message"
+            android:text="Send Message"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="#FFFF"
+            android:backgroundTint="@color/teal_200"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
