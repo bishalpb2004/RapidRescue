@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
+import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentPopUpBinding
 import com.example.rapidrescue.ui.add.AddDataModel
 
@@ -50,6 +52,8 @@ class PopUpFragment : DialogFragment() {
             binding.phoneNumber.setText(numberData?.phoneNumber)
 
         }
+
+
         registerEvents()
     }
 

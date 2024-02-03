@@ -54,6 +54,7 @@ class AddFragment : Fragment() {
 
         }
         registerEvents()
+
     }
 
     private fun registerEvents() {

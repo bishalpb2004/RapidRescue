@@ -28,7 +28,11 @@
         android:id="@+id/navigation_notifications"
         android:name="com.example.rapidrescue.ui.notifications.ProfileFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_notifications_to_afterProfileFragment"
+            app:destination="@id/afterProfileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/registeredNumbersFragment"
@@ -48,15 +52,26 @@
         <action
             android:id="@+id/action_addFragment_to_registeredNumbersFragment2"
             app:destination="@id/registeredNumbersFragment" />
+        <action
+            android:id="@+id/action_addFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
     <dialog
         android:id="@+id/popUpFragment"
         android:name="com.example.rapidrescue.ui.PopUpFragment"
-        android:label="PopUpFragment" />
+        android:label="PopUpFragment" >
+        <action
+            android:id="@+id/action_popUpFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </dialog>
     <fragment
         android:id="@+id/SOSMessageFragment"
-        android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessage"
-        android:label="SOSMessageFragment"
-        tools:layout="@layout/fragment_s_o_s_message"/>
+        android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessageFragment"
+        android:label="SOSMessageFragment" />
+    <fragment
+        android:id="@+id/afterProfileFragment"
+        android:name="com.example.rapidrescue.ui.AfterProfileFragment"
+        android:label="fragment_after_profile"
+        tools:layout="@layout/fragment_after_profile" />
 
 </navigation>

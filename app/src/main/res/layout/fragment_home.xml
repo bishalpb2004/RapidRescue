@@ -17,44 +17,59 @@
         android:background="#FF0F0F0F"
         android:paddingTop="22dp"
         android:paddingBottom="85dp"
-        android:paddingHorizontal="10dp"
-        >
+        android:paddingHorizontal="10dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
-                android:id="@+id/linear_layout1"
+                android:orientation="horizontal"
+                android:background="#000000"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black"
-                android:paddingVertical="29dp"
-                android:paddingHorizontal="26dp"
-                android:layout_marginBottom="75dp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textview"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_height="wrap_content"
+                android:layout_height="130sp">
+
+                <LinearLayout
+                    android:id="@+id/linear_layout1"
                     android:layout_width="wrap_content"
-                    android:text="welcome"
-                    />
-                <TextView
-                    android:id="@+id/textview_name"
-                    android:textColor="#00E6C5"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Bishal P Biswas"
-                    />
+                    android:layout_height="120sp"
+                    android:background="@color/black"
+                    android:paddingVertical="29dp"
+                    android:paddingHorizontal="26dp"
+                    android:layout_marginBottom="75dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textview"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="welcome"
+                        />
+                    <TextView
+                        android:id="@+id/textview_name"
+                        android:textColor="#00E6C5"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Bishal P Biswas"
+                        />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_marginTop="35sp"
+                    android:layout_marginStart="130sp"
+                    android:src="@drawable/img"
+                    android:layout_width="45sp"
+                    android:layout_height="45sp"/>
+
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/black"
+                android:layout_marginTop="10sp"
                 android:paddingVertical="25dp"
                 android:paddingHorizontal="60dp"
                 android:layout_marginBottom="10dp"
@@ -71,7 +86,7 @@
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_marginEnd="12dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/img_1"
                         android:scaleType="fitXY"
                         />
                     <TextView
@@ -114,7 +129,7 @@
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_marginEnd="11dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/img_2"
                         android:scaleType="fitXY"
                         />
                     <TextView
@@ -154,10 +169,10 @@
                     android:orientation="horizontal">
                     <ImageView
                         android:id="@+id/r5pr5idyegki"
-                        android:layout_width="14dp"
+                        android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_marginEnd="17dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/img_3"
                         android:scaleType="fitXY"
                         />
                     <TextView
@@ -205,7 +220,7 @@
                             android:id="@+id/rg717hcypvsv"
                             android:layout_width="21dp"
                             android:layout_height="21dp"
-                            android:src="@mipmap/ic_launcher"
+                            android:src="@drawable/img_4"
                             android:scaleType="fitXY"
                             />
                     </RelativeLayout>
@@ -245,10 +260,10 @@
                     android:orientation="horizontal">
                     <ImageView
                         android:id="@+id/rcyrf28ctp0r"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_marginEnd="14dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/img_5"
                         android:scaleType="fitXY"
                         />
                     <TextView
