@@ -21,6 +21,7 @@ class SOSMessage : Fragment() {
 
     private val SMS_PERMISSION_CODE = 100
     private lateinit var messageEditText: EditText
+    private lateinit var phoneNumberEditText: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +30,7 @@ class SOSMessage : Fragment() {
         val view = inflater.inflate(R.layout.fragment_s_o_s_message, container, false)
 
         messageEditText = view.findViewById(R.id.messageEditText)
+
 
         // Set OnClickListener for the "Send Message" button
         view.findViewById<View>(R.id.sendMessageButton).setOnClickListener {
