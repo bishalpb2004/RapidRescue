@@ -132,9 +132,11 @@ class SOSMessage : Fragment() {
             ) {
                 // Permissions granted, send the message with location
                 val message = messageEditText.text.toString().trim()
-                val selectedNumber = sharedViewModel.selectedPhoneNumber.toString()
+                val _selectedPhoneNumber = sharedViewModel.selectedPhoneNumber.toString()
+                val selectedPhoneNumber1 = _selectedPhoneNumber.removeRange(0,13)
+                val selectedPhoneNumber = selectedPhoneNumber1.removeRange(10, selectedPhoneNumber1.length)
 
-                    sendSMSWithLocation(message, selectedNumber)
+                    sendSMSWithLocation(message, selectedPhoneNumber)
             } else {
                 Toast.makeText(
                     requireContext(),

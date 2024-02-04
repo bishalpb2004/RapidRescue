@@ -175,17 +175,17 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
 
 
     override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
-        databaseReference.child(addNumberData.name).removeValue().addOnCompleteListener {
-            if (it.isSuccessful){
-                Toast.makeText(context,"Deleted Successfully",Toast.LENGTH_SHORT).show()
-
-            }
-            else{
-
-                Toast.makeText(context,it.exception?.message,Toast.LENGTH_SHORT).show()
-
-            }
-        }
+//        databaseReference.child(addNumberData.name).removeValue().addOnCompleteListener {
+//            if (it.isSuccessful){
+//                Toast.makeText(context,"Deleted Successfully",Toast.LENGTH_SHORT).show()
+//
+//            }
+//            else{
+//
+//                Toast.makeText(context,it.exception?.message,Toast.LENGTH_SHORT).show()
+//
+//            }
+//        }
     }
 
     override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
