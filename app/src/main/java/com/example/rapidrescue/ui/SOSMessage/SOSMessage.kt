@@ -51,7 +51,7 @@ class SOSMessage : Fragment() {
         val message = messageEditText.text.toString().trim()
         val _selectedPhoneNumber = sharedViewModel.selectedPhoneNumber.toString()
         val selectedPhoneNumber1 = _selectedPhoneNumber.removeRange(0,13)
-        val selectedPhoneNumber = selectedPhoneNumber1.removeRange(10, 20)
+        val selectedPhoneNumber = selectedPhoneNumber1.removeRange(10, selectedPhoneNumber1.length)
         if (message.isNotEmpty()) {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
@@ -62,7 +62,7 @@ class SOSMessage : Fragment() {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                    sendSMSWithLocation(message, selectedPhoneNumber)
+                    sendSMSWithLocation(selectedPhoneNumber, selectedPhoneNumber)
 
                 navigateBack()
             } else {
