@@ -45,7 +45,6 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var communicator: Communicator
 
     private val sharedViewModel: SharedViewModel by lazy {
         ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -66,8 +65,6 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
         notificationsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
-
-
         return root
     }
 
@@ -82,8 +79,6 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
         init(view)
         getDataFromFirebase()
         registerEvents()
-
-
 
     }
 
@@ -134,6 +129,7 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
 
                     override fun onItemClick(position: Int) {
                         val selectedNumber = mList[position].phoneNumber
+
                         sharedViewModel.selectedPhoneNumber = selectedNumber
                         navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
                     }
@@ -197,7 +193,7 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
     }
 
     override fun onItemClick(position: Int) {
-        navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
+//        navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
     }
 
 }
