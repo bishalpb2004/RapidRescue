@@ -94,58 +94,69 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
     }
 
     private fun getDataFromFirebase() {
-        databaseReference.addValueEventListener(object : ValueEventListener{
+        databaseReference.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 mList.clear()
-                for (numberSnapshot in snapshot.children){
-                    val registeredNumber=numberSnapshot.key?.let {
-                        AddDataModel(it,numberSnapshot.value.toString())
+                for (numberSnapshot in snapshot.children) {
+                    val registeredNumber = numberSnapshot.key?.let {
+                        AddDataModel(it, numberSnapshot.value.toString())
                     }
-                    if (registeredNumber!=null){
+                    if (registeredNumber != null) {
                         mList.add(registeredNumber)
                     }
                 }
-                val adapter=AddAdapter(mList)
-                binding.recyclerView.adapter=adapter
-                adapter.setListener(object:AddAdapter.AddAdapterClicksInterface{
-                    override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
-                        databaseReference.child(addNumberData.name).removeValue().addOnCompleteListener {
-                            if (it.isSuccessful){
-                                Toast.makeText(context,"Deleted Successfully",Toast.LENGTH_SHORT).show()
 
-                            }
-                            else{
+                val binding = _binding // Local variable to store the reference
+                if (binding != null) { // Check if the binding is not null
+                    val adapter = AddAdapter(mList)
+                    binding.recyclerView.adapter = adapter
+                    adapter.setListener(object : AddAdapter.AddAdapterClicksInterface {
+                        override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
+                            databaseReference.child(addNumberData.name).removeValue()
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful) {
+                                        Toast.makeText(
+                                            context,
+                                            "Deleted Successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
-                                Toast.makeText(context,it.exception?.message,Toast.LENGTH_SHORT).show()
+                                    } else {
 
-                            }
+                                        Toast.makeText(
+                                            context,
+                                            it.exception?.message,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                    }
+                                }
                         }
+
+                        override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
+                        }
+
+                        override fun onItemClick(position: Int) {
+                            val selectedNumber = mList[position].phoneNumber
+
+                            sharedViewModel.selectedPhoneNumber = selectedNumber
+                            navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
+                        }
+                    })
+                    requireActivity().runOnUiThread {
+                        adapter.notifyDataSetChanged()
                     }
-
-                    override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
-                    }
-
-
-                    override fun onItemClick(position: Int) {
-                        val selectedNumber = mList[position].phoneNumber
-
-                        sharedViewModel.selectedPhoneNumber = selectedNumber
-                        navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
-                    }
-
-                })
-                requireActivity().runOnUiThread {
-                    adapter.notifyDataSetChanged()
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context,error.message,Toast.LENGTH_LONG).show()
+                Toast.makeText(context, error.message, Toast.LENGTH_LONG).show()
             }
         })
-
     }
+
+
 
     private fun init(view: View) {
         navController=Navigation.findNavController(view)
