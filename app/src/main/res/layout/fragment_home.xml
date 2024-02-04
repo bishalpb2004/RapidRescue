@@ -56,12 +56,6 @@
                         />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_marginTop="35sp"
-                    android:layout_marginStart="130sp"
-                    android:src="@drawable/img"
-                    android:layout_width="45sp"
-                    android:layout_height="45sp"/>
 
             </LinearLayout>
             <LinearLayout

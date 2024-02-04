@@ -42,5 +42,9 @@ class ProfileFragment : Fragment() {
             navController.navigate(R.id.action_navigation_notifications_to_afterProfileFragment)
 
         }
+        binding.btnFetchData.setOnClickListener {
+            navController.navigate(R.id.action_navigation_notifications_to_fetchUserDataFragment)
+
+        }
     }
 }

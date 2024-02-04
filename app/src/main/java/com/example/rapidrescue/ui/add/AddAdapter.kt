@@ -44,9 +44,9 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
                     listener?.onDeleteNumberBtnClicked(this)
                 }
 
-                binding.editNumber.setOnClickListener {
-                    listener?.onEditNumberBtnClicked(this)
-                }
+//                binding.editNumber.setOnClickListener {
+//                    listener?.onEditNumberBtnClicked(this)
+//                }
             }
 
         }

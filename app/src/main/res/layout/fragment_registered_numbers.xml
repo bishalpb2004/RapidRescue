@@ -11,8 +11,8 @@
     <ImageView
         android:id="@+id/addBtnRegister"
         android:layout_gravity="end"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
         android:src="@drawable/baseline_add_box_24"/>
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"

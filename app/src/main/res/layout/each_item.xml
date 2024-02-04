@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000000"
+        android:background="#353535"
         android:paddingVertical="20dp">
 
         <LinearLayout
@@ -53,6 +53,8 @@
 
 
         <ImageView
+
+            android:visibility="invisible"
             android:id="@+id/editNumber"
             android:layout_width="30sp"
             android:layout_height="30sp"

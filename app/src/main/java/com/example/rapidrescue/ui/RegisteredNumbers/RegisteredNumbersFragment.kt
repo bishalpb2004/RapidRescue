@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,6 +82,7 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
         init(view)
         getDataFromFirebase()
         registerEvents()
+
 
 
     }

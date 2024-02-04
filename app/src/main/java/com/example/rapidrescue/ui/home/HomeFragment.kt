@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -12,11 +13,13 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentHomeBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class HomeFragment : Fragment() {
     private lateinit var navController:NavController
     private var _binding: FragmentHomeBinding? = null
-
+    private lateinit var databaseReference: DatabaseReference
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -48,6 +51,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController=Navigation.findNavController(view)
+        databaseReference = FirebaseDatabase.getInstance().getReference()
 
         binding.linearLayout5.setOnClickListener {
             navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
@@ -57,6 +61,31 @@ class HomeFragment : Fragment() {
         }
         binding.knowInstructions.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
+        }
+
+        readData()
+
+    }
+
+    private fun readData() {
+        databaseReference.child("Users").get().addOnSuccessListener {
+
+            if (it.exists()){
+                for (userSnapshot in it.children) {
+                    val name = userSnapshot.child("name").value
+
+                    binding.textviewName.text = "$name"
+
+                }
+
+
+            }else{
+
+                Toast.makeText(context,"User does not exist", Toast.LENGTH_LONG).show()
+
+            }
+        }.addOnFailureListener {
+            Toast.makeText(context,it.message, Toast.LENGTH_LONG).show()
         }
     }
 }
