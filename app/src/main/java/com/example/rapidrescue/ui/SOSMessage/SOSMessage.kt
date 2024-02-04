@@ -62,7 +62,7 @@ class SOSMessage : Fragment() {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                    sendSMSWithLocation(selectedPhoneNumber, selectedPhoneNumber)
+                    sendSMSWithLocation(message, selectedPhoneNumber)
 
                 navigateBack()
             } else {
