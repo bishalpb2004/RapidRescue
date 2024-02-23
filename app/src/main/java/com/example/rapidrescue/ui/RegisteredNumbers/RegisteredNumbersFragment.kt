@@ -42,7 +42,7 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
     private val binding get() = _binding!!
 
     private val sharedViewModel: SharedViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        ViewModelProvider(requireActivity())[SharedViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -51,7 +51,7 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
         savedInstanceState: Bundle?
     ): View {
         val notificationsViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
+            ViewModelProvider(this)[ProfileViewModel::class.java]
 
         _binding = FragmentRegisteredNumbersBinding.inflate(inflater, container, false)
         val root: View = binding.root

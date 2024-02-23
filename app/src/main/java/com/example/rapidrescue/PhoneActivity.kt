@@ -1,7 +1,6 @@
 package com.example.rapidrescue
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,9 +8,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import java.util.concurrent.TimeUnit
 
 class PhoneActivity : AppCompatActivity() {
@@ -69,8 +73,10 @@ class PhoneActivity : AppCompatActivity() {
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG", "signInWithPhoneAuthCredential: ${task.exception.toString()}")
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        // The verification code entered was invalid
+                    when (task.exception) {
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            // The verification code entered was invalid
+                        }
                     }
                     // Update UI
                 }
@@ -99,10 +105,10 @@ class PhoneActivity : AppCompatActivity() {
 
             if (e is FirebaseAuthInvalidCredentialsException) {
                 // Invalid request
-                Log.d("TAG", "onVerificationFailed: ${e.toString()}")
+                Log.d("TAG", "onVerificationFailed: $e")
             } else if (e is FirebaseTooManyRequestsException) {
                 // The SMS quota for the project has been exceeded
-                Log.d("TAG", "onVerificationFailed: ${e.toString()}")
+                Log.d("TAG", "onVerificationFailed: $e")
             }
             mProgressBar.visibility = View.VISIBLE
             // Show a message and update the UI

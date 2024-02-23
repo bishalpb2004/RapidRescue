@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController=Navigation.findNavController(view)
-        databaseReference = FirebaseDatabase.getInstance().getReference()
+        databaseReference = FirebaseDatabase.getInstance().reference
 
         binding.linearLayout5.setOnClickListener {
             navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)

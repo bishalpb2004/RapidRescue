@@ -23,7 +23,7 @@ class FetchUserDataFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding=FragmentFetchUserDataBinding.inflate(inflater,container,false)
         return binding.root
@@ -32,7 +32,7 @@ class FetchUserDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController=Navigation.findNavController(view)
-        databaseReference = FirebaseDatabase.getInstance().getReference()
+        databaseReference = FirebaseDatabase.getInstance().reference
 
 //        databaseReference.addValueEventListener(object :ValueEventListener{
 //
