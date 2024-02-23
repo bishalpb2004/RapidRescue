@@ -58,50 +58,7 @@
 
 
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/linear_layout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black"
-                android:layout_marginTop="10sp"
-                android:paddingVertical="25dp"
-                android:paddingHorizontal="60dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:id="@+id/r9zpivou11li"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/rbf8l6l86wbe"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_marginEnd="12dp"
-                        android:src="@drawable/img_1"
-                        android:scaleType="fitXY"
-                        />
-                    <TextView
-                        android:id="@+id/edit_num"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:text="Edit"
-                        />
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/SOS_message"
-                    android:textColor="#00E6C5"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="SOS Message"
-                    />
-            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/linear_layout3"
                 android:layout_width="match_parent"

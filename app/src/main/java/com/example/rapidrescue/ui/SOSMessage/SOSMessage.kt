@@ -23,7 +23,7 @@ import com.example.rapidrescue.ui.RegisteredNumbers.SharedViewModel
 class SOSMessage : Fragment() {
 
     private val sharedViewModel: SharedViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        ViewModelProvider(requireActivity())[SharedViewModel::class.java]
     }
 
     private val SMS_PERMISSION_CODE = 100
