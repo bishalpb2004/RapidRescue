@@ -136,7 +136,7 @@ class SOSMessage : Fragment() {
                 val selectedPhoneNumber1 = _selectedPhoneNumber.removeRange(0,13)
                 val selectedPhoneNumber = selectedPhoneNumber1.removeRange(10, selectedPhoneNumber1.length)
 
-                    sendSMSWithLocation(message, selectedPhoneNumber)
+                this.sendSMSWithLocation(message, selectedPhoneNumber)
             } else {
                 Toast.makeText(
                     requireContext(),
