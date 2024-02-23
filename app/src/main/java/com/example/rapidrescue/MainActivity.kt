@@ -1,16 +1,13 @@
 package com.example.rapidrescue
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rapidrescue.databinding.ActivityMainBinding
-import com.example.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment
-import com.example.rapidrescue.ui.SOSMessage.SOSMessage
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(){

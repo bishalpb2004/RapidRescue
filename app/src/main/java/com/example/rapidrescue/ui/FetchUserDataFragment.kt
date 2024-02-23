@@ -2,21 +2,16 @@ package com.example.rapidrescue.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentFetchUserDataBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
 class FetchUserDataFragment : Fragment() {
@@ -43,7 +38,7 @@ class FetchUserDataFragment : Fragment() {
 //
 //        })
 
-            readData()
+        this.readData()
 
 
 
