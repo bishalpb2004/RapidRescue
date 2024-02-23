@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.rapidrescue.ui.notifications.ProfileFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/Profile"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_navigation_notifications_to_afterProfileFragment"
@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/registeredNumbersFragment"
         android:name="com.example.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment"
-        android:label="fragment_registered_numbers"
+        android:label="RapidRescue"
         tools:layout="@layout/fragment_registered_numbers" >
         <action
             android:id="@+id/action_registeredNumbersFragment_to_SOSMessageFragment"
@@ -81,7 +81,7 @@
     <fragment
         android:id="@+id/afterProfileFragment"
         android:name="com.example.rapidrescue.ui.AfterProfileFragment"
-        android:label="fragment_after_profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_after_profile" >
         <action
             android:id="@+id/action_afterProfileFragment_to_navigation_notifications"
@@ -94,7 +94,7 @@
     <fragment
         android:id="@+id/fetchUserDataFragment"
         android:name="com.example.rapidrescue.ui.FetchUserDataFragment"
-        android:label="fragment_fetch_user_data"
+        android:label="Profile"
         tools:layout="@layout/fragment_fetch_user_data" />
 
 </navigation>
