@@ -1,22 +1,17 @@
 package com.example.rapidrescue.ui.add
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.EachItemBinding
-import com.example.rapidrescue.ui.SOSMessage.SOSMessage
-import kotlinx.coroutines.NonDisposableHandle.parent
-
 
 
 class AddAdapter(private val list:MutableList<AddDataModel>)
     :RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
 
-    private var listener:AddAdapter.AddAdapterClicksInterface?=null
-    fun setListener(listener:AddAdapter.AddAdapterClicksInterface){
+    private var listener:AddAdapterClicksInterface?=null
+    fun setListener(listener:AddAdapterClicksInterface){
         this.listener=listener
     }
     inner class AddViewHolder(itemView: View, val binding:EachItemBinding,clickListener: AddAdapterClicksInterface) :RecyclerView.ViewHolder(binding.root){
