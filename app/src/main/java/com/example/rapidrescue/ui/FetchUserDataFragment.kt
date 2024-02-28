@@ -56,9 +56,9 @@ class FetchUserDataFragment : Fragment() {
                     val schId = userSnapshot.child("schNumber").value
                     val phNumber = userSnapshot.child("phoneNumber").value
 
-                    binding.tvName.text = "NAME : $name"
-                    binding.tvSchId.text = "SCHOLAR ID : $schId"
-                    binding.tvPhone.text = "PHONE NUMBER : $phNumber"
+                    binding.tvName.text = "Name : $name"
+                    binding.tvSchId.text = "Scholar ID : $schId"
+                    binding.tvPhone.text = "Phone Number : $phNumber"
                 }
 
 
