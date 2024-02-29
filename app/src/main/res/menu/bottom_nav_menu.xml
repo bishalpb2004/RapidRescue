@@ -16,4 +16,9 @@
         android:icon="@drawable/baseline_account_box_24"
         android:title="@string/profile" />
 
+    <item
+        android:id="@+id/navigation_chatbot"
+        android:icon="@drawable/chatbot_android"
+        android:title="@string/chatbot"/>
+
 </menu>
