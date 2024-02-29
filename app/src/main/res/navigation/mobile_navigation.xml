@@ -115,7 +115,7 @@
 
     <fragment
         android:id="@+id/chatbotFragment"
-        android:name="com.example.rapidrescue.ui.chatbot.fragment_chatbot"
+        android:name="com.example.rapidrescue.ui.chatbot.ChatBotFragment"
         android:label="RapidRescue"
-        tools:layout="@layout/fragment_chatbot"/>
+        tools:layout="@layout/fragment_chat_bot"/>
 </navigation>
