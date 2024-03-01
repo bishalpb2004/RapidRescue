@@ -19,6 +19,6 @@
     <item
         android:id="@+id/navigation_chatbot"
         android:icon="@drawable/chatbot_android"
-        android:title="@string/chatbot"/>
+        android:title="@string/chatbot_"/>
 
 </menu>

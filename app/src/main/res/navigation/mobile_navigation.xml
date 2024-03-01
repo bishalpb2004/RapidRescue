@@ -114,8 +114,8 @@
         tools:layout="@layout/fragment_fetch_user_data" />
 
     <fragment
-        android:id="@+id/chatbotFragment"
-        android:name="com.example.rapidrescue.ui.chatbot.ChatBotFragment"
+        android:id="@+id/navigation_chatbot"
+        android:name="com.example.rapidrescue.chatbot"
         android:label="RapidRescue"
-        tools:layout="@layout/fragment_chat_bot"/>
+        tools:layout="@layout/fragment_chatbot"/>
 </navigation>
