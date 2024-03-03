@@ -16,4 +16,5 @@
     <string name="Profile">Profile</string>
     <string name="chatbot">Chatbot</string>
     <string name="chatbot_">ChatBot</string>
+    <string name="developers">{/Developers}</string>
 </resources>
