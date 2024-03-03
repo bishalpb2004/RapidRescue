@@ -35,6 +35,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         navController=Navigation.findNavController(view)
         binding.btnAccessAfterProfile.setOnClickListener {
             navController.navigate(R.id.action_navigation_notifications_to_afterProfileFragment)
@@ -43,6 +44,9 @@ class ProfileFragment : Fragment() {
         binding.btnFetchData.setOnClickListener {
             navController.navigate(R.id.action_navigation_notifications_to_fetchUserDataFragment)
 
+        }
+        binding.developersBtn.setOnClickListener {
+            navController.navigate(R.id.action_navigation_notifications_to_developers_btn)
         }
     }
 }
