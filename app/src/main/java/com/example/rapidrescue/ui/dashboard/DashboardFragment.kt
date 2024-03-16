@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.rapidrescue.databinding.FragmentDashboardBinding
 
+
 class DashboardFragment : Fragment() {
 
     private lateinit var navController: NavController
