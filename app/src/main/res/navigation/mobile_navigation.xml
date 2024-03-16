@@ -8,17 +8,23 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.rapidrescue.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="RapidRescue"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_registeredNumbersFragment"
-            app:destination="@id/registeredNumbersFragment" />
+            app:destination="@id/registeredNumbersFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_navigation_home_to_popUpFragment"
-            app:destination="@id/popUpFragment" />
+            app:destination="@id/popUpFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_navigation_home_to_instructionsFragment"
-            app:destination="@id/instructionsFragment" />
+            app:destination="@id/instructionsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -30,24 +36,35 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.rapidrescue.ui.notifications.ProfileFragment"
-        android:label="@string/title_notifications"
+        android:label="RapidRescue"
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_navigation_notifications_to_afterProfileFragment"
-            app:destination="@id/afterProfileFragment" />
+            app:destination="@id/afterProfileFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_navigation_notifications_to_fetchUserDataFragment"
-            app:destination="@id/fetchUserDataFragment" />
+            app:destination="@id/fetchUserDataFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_notifications_to_developers_btn"
+            app:destination="@id/developers_btn"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/registeredNumbersFragment"
         android:name="com.example.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment"
-        android:label="fragment_registered_numbers"
+        android:label="RapidRescue"
         tools:layout="@layout/fragment_registered_numbers" >
         <action
             android:id="@+id/action_registeredNumbersFragment_to_SOSMessageFragment"
-            app:destination="@id/SOSMessageFragment" />
+            app:destination="@id/SOSMessageFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
 
     <fragment
@@ -57,10 +74,14 @@
         tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_registeredNumbersFragment2"
-            app:destination="@id/registeredNumbersFragment" />
+            app:destination="@id/registeredNumbersFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_addFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_home"
+            app:enterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <dialog
         android:id="@+id/popUpFragment"
@@ -68,7 +89,9 @@
         android:label="PopUpFragment" >
         <action
             android:id="@+id/action_popUpFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_home"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </dialog>
     <fragment
         android:id="@+id/SOSMessageFragment"
@@ -76,12 +99,14 @@
         android:label="SOSMessageFragment" >
         <action
             android:id="@+id/action_SOSMessageFragment_to_registeredNumbersFragment"
-            app:destination="@id/registeredNumbersFragment" />
+            app:destination="@id/registeredNumbersFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/afterProfileFragment"
         android:name="com.example.rapidrescue.ui.AfterProfileFragment"
-        android:label="fragment_after_profile"
+        android:label="RapidRescue"
         tools:layout="@layout/fragment_after_profile" >
         <action
             android:id="@+id/action_afterProfileFragment_to_navigation_notifications"
@@ -90,11 +115,30 @@
     <fragment
         android:id="@+id/instructionsFragment"
         android:name="com.example.rapidrescue.ui.Instructions.InstructionsFragment"
-        android:label="InstructionsFragment" />
+        android:label="RapidRescue" />
     <fragment
         android:id="@+id/fetchUserDataFragment"
         android:name="com.example.rapidrescue.ui.FetchUserDataFragment"
-        android:label="fragment_fetch_user_data"
+        android:label="RapidRescue"
         tools:layout="@layout/fragment_fetch_user_data" />
+
+    <fragment
+        android:id="@+id/navigation_chatbot"
+        android:name="com.example.rapidrescue.chatbot"
+        android:label="RapidRescue"
+        tools:layout="@layout/fragment_chatbot"/>
+    <fragment
+        android:id="@+id/developers_btn"
+        android:name="com.example.rapidrescue.developers"
+        android:label="RapidRescue"
+        tools:layout="@layout/fragment_developers">
+        <action
+            android:id="@+id/action_developers_btn_to_navigation_notifications"
+            app:destination="@id/navigation_notifications"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:launchSingleTop="false"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpToInclusive="false" />
+    </fragment>
 
 </navigation>

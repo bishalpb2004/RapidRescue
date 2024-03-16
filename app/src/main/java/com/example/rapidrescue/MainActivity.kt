@@ -1,6 +1,8 @@
 package com.example.rapidrescue
 
 import android.os.Bundle
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(FLAG_LAYOUT_NO_LIMITS, FLAG_LAYOUT_IN_SCREEN)
 
         auth = FirebaseAuth.getInstance()
 
@@ -31,12 +34,12 @@ class MainActivity : AppCompatActivity(){
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,
+                R.id.navigation_chatbot
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
-
 
 }
