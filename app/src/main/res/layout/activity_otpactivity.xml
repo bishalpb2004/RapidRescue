@@ -43,7 +43,8 @@
         android:hint="0"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:importantForAutofill="auto" />
 
     <EditText
         android:id="@+id/otpEditText2"
@@ -58,7 +59,8 @@
         app:layout_constraintEnd_toStartOf="@+id/otpEditText3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/otpEditText1"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:importantForAutofill="auto" />
 
     <EditText
         android:id="@+id/otpEditText3"
@@ -73,7 +75,8 @@
         app:layout_constraintEnd_toStartOf="@+id/otpEditText4"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/otpEditText2"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:importantForAutofill="auto" />
 
     <EditText
         android:id="@+id/otpEditText4"
@@ -88,7 +91,8 @@
         app:layout_constraintEnd_toStartOf="@+id/otpEditText5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/otpEditText3"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:importantForAutofill="auto" />
 
 
     <EditText
@@ -105,7 +109,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/otpEditText4"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
-        tools:layout_editor_absoluteY="198dp" />
+        tools:layout_editor_absoluteY="198dp"
+        android:importantForAutofill="auto" />
 
 
     <EditText
@@ -121,7 +126,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/otpEditText5"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:importantForAutofill="auto" />
 
 
     <androidx.constraintlayout.widget.Guideline

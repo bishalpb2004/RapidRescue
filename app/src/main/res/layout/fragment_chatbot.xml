@@ -35,7 +35,6 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toEndOf="@+id/editText"
             android:src="@drawable/white_send"
             android:layout_marginLeft="3dp"
             android:padding="5dp"
