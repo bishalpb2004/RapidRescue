@@ -8,6 +8,8 @@ class HomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "welcome"
+
     }
     val text: LiveData<String> = _text
+
 }
