@@ -3,11 +3,9 @@ package com.example.rapidrescue.ui.BottomSheetDialogs
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentBottomSheetBishalBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -18,7 +16,7 @@ class BottomSheet_Bishal : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding= FragmentBottomSheetBishalBinding.inflate(inflater,container,false)
         return binding.root
