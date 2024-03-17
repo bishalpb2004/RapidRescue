@@ -1,3 +1,5 @@
+@file:Suppress("PackageName")
+
 package com.example.rapidrescue.ui.SOSMessage
 
 import android.Manifest
@@ -20,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.ui.RegisteredNumbers.SharedViewModel
 
+@Suppress("DEPRECATION")
 class SOSMessage : Fragment() {
 
     private val sharedViewModel: SharedViewModel by lazy {
