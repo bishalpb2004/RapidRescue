@@ -34,14 +34,14 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal"
                     android:layout_width="200sp"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <pl.droidsonroids.gif.GifImageView
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/handwash1"
                         android:layout_width="50sp"
-                        android:layout_height="50sp"/>
+                        android:layout_height="50sp"
+                        tools:ignore="MissingClass" />
 
                     <TextView
                         android:id="@+id/textDashboard"
@@ -84,7 +84,8 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/material_study"
                         android:layout_width="50sp"
-                        android:layout_height="50sp"/>
+                        android:layout_height="50sp"
+                        tools:ignore="MissingClass" />
 
                     <TextView
                         android:layout_margin="10sp"
@@ -126,7 +127,8 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/health1"
                         android:layout_width="50sp"
-                        android:layout_height="50sp"/>
+                        android:layout_height="50sp"
+                        tools:ignore="MissingClass" />
 
                     <TextView
                         android:layout_margin="10sp"
@@ -169,7 +171,8 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/career1"
                         android:layout_width="50sp"
-                        android:layout_height="50sp"/>
+                        android:layout_height="50sp"
+                        tools:ignore="MissingClass" />
 
                     <TextView
                         android:layout_margin="10sp"
