@@ -2,6 +2,7 @@ package com.example.rapidrescue.ui.RegisteredNumbers
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,12 +95,11 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
             override fun onDataChange(snapshot: DataSnapshot) {
                 mList.clear()
                 for (numberSnapshot in snapshot.children) {
-                    val registeredNumber = numberSnapshot.key?.let {
-                        AddDataModel(it, numberSnapshot.value.toString())
-                    }
-                    if (registeredNumber != null) {
-                        mList.add(registeredNumber)
-                    }
+                    val name = numberSnapshot.child("name").getValue(String::class.java) ?: ""
+                    val phoneNumber = numberSnapshot.child("phoneNumber").getValue(String::class.java) ?: ""
+
+                    val registeredNumber = AddDataModel(name, phoneNumber)
+                    mList.add(registeredNumber)
                 }
 
                 val binding = _binding // Local variable to store the reference
@@ -108,36 +108,65 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
                     binding.recyclerView.adapter = adapter
                     adapter.setListener(object : AddAdapter.AddAdapterClicksInterface {
                         override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
-                            databaseReference.child(addNumberData.name).removeValue()
-                                .addOnCompleteListener {
-                                    if (it.isSuccessful) {
-                                        Toast.makeText(
-                                            context,
-                                            "Deleted Successfully",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-
-                                    } else {
-
-                                        Toast.makeText(
-                                            context,
-                                            it.exception?.message,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-
+                            // Query to find the specific number
+                            databaseReference
+                                .orderByChild("name")
+                                .equalTo(addNumberData.name)
+                                .addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        for (numberSnapshot in snapshot.children) {
+                                            // Check if the found entry matches the data to be deleted
+                                            if (numberSnapshot.child("phoneNumber").getValue(String::class.java) == addNumberData.phoneNumber &&
+                                                numberSnapshot.child("name").getValue(String::class.java) == addNumberData.name) {
+                                                // Delete the entry
+                                                numberSnapshot.ref.removeValue()
+                                                    .addOnCompleteListener { task ->
+                                                        if (task.isSuccessful) {
+                                                            Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show()
+                                                        } else {
+                                                            Toast.makeText(context, "Deletion failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                                                            Log.e("DeleteError", "Deletion failed", task.exception)
+                                                        }
+                                                    }
+                                            }
+                                        }
                                     }
-                                }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        Toast.makeText(context, error.message, Toast.LENGTH_LONG).show()
+                                    }
+                                })
                         }
 
+
                         override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
+                            // Your edit logic here
                         }
 
                         override fun onItemClick(position: Int) {
                             val selectedNumber = mList[position].phoneNumber
+                            val selectedName = mList[position].name
 
                             sharedViewModel.selectedPhoneNumber = selectedNumber
-                            navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
+
+                            // Assuming you want to navigate based on the selected name
+                            databaseReference.orderByChild("name").equalTo(selectedName)
+                                .addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if (snapshot.exists()) {
+                                            // Navigate to the appropriate fragment based on the selected name
+                                            navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
+                                        } else {
+                                            Toast.makeText(context, "Data not found", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        Toast.makeText(context, error.message, Toast.LENGTH_LONG).show()
+                                    }
+                                })
                         }
+
                     })
                     requireActivity().runOnUiThread {
                         adapter.notifyDataSetChanged()
@@ -150,6 +179,7 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
             }
         })
     }
+
 
 
 
