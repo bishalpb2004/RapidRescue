@@ -26,28 +26,32 @@
             android:src="@drawable/github_logo"
             android:layout_weight="1"
             android:layout_width="100sp"
-            android:layout_height="100sp"/>
+            android:layout_height="100sp"
+            android:padding="15dp"/>
 
         <ImageView
             android:id="@+id/linkedIn_icon"
             android:src="@drawable/pngegg"
             android:layout_weight="1"
             android:layout_width="100sp"
-            android:layout_height="100sp"/>
+            android:layout_height="100sp"
+            android:padding="15dp"/>
 
         <ImageView
             android:id="@+id/insta_icon"
             android:src="@drawable/insta"
             android:layout_weight="1"
             android:layout_width="100sp"
-            android:layout_height="100sp"/>
+            android:layout_height="100sp"
+            android:padding="15dp"/>
 
         <ImageView
             android:id="@+id/fb_icon"
             android:src="@drawable/logo_facebookpng_32242"
             android:layout_weight="1"
             android:layout_width="100sp"
-            android:layout_height="100sp"/>
+            android:layout_height="100sp"
+            android:padding="15dp"/>
 
     </LinearLayout>
 
