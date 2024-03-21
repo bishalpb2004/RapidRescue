@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/white">
 
     <Button
         android:id="@+id/verifyOTPBtn"
@@ -29,7 +30,9 @@
         android:textSize="16sp"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/verifyOTPBtn"
-        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+        app:layout_constraintTop_toTopOf="@+id/guideline5"
+        />
+
 
     <EditText
         android:id="@+id/otpEditText1"
