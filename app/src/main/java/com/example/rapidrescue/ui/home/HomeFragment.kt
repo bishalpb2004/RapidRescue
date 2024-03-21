@@ -43,11 +43,6 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,15 +50,19 @@ class HomeFragment : Fragment() {
         navController=Navigation.findNavController(view)
         databaseReference = FirebaseDatabase.getInstance().reference
 
-        binding.linearLayout5.setOnClickListener {
-            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
-        }
-        binding.linearLayout3.setOnClickListener{
-            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
-        }
-        binding.knowInstructions.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
-        }
+        disableClickableElements()
+
+//        binding.linearLayout5.setOnClickListener {
+//            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
+//        }
+//        binding.linearLayout3.setOnClickListener{
+//            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
+//        }
+//        binding.knowInstructions.setOnClickListener {
+//            findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
+//        }
+
+        binding.loadingOverlay.visibility = View.VISIBLE
 
         readData()
 
@@ -74,27 +73,63 @@ class HomeFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
+
     }
 
     private fun readData() {
-        databaseReference.child("Users").get().addOnSuccessListener {
+        databaseReference.child("Users").get().addOnCompleteListener { task ->
+            // Hide loading overlay regardless of success or failure
+            binding.loadingOverlay.visibility = View.GONE
 
-            if (it.exists()){
-                for (userSnapshot in it.children) {
-                    val name = userSnapshot.child("name").value
-
-                    binding.textviewName.text = "$name"
-
+            if (task.isSuccessful) {
+                val snapshot = task.result
+                if (snapshot != null && snapshot.exists()) {
+                    for (userSnapshot in snapshot.children) {
+                        val name = userSnapshot.child("name").value
+                        binding.textviewName.text = "$name"
+                    }
+                } else {
+                    Toast.makeText(context, "User does not exist", Toast.LENGTH_LONG).show()
                 }
-
-
-            }else{
-
-                Toast.makeText(context,"User does not exist", Toast.LENGTH_LONG).show()
-
+            } else {
+                // Handle failure case
+                Toast.makeText(context, task.exception?.message ?: "Failed to fetch data", Toast.LENGTH_LONG).show()
             }
-        }.addOnFailureListener {
-            Toast.makeText(context,it.message, Toast.LENGTH_LONG).show()
+            // Enable clickable elements after data loading completes
+            enableClickableElements()
         }
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun disableClickableElements() {
+        // Disable any clickable elements or set onClick listeners to null
+        binding.linearLayout5.isClickable = false
+        binding.linearLayout3.isClickable = false
+        binding.knowInstructions.isClickable = false
+        binding.linearLayout5.setOnClickListener(null)
+        binding.linearLayout3.setOnClickListener(null)
+        binding.knowInstructions.setOnClickListener(null)
+    }
+
+    private fun enableClickableElements() {
+        // Enable clickable elements and set onClick listeners back
+        binding.linearLayout5.isClickable = true
+        binding.linearLayout3.isClickable = true
+        binding.knowInstructions.isClickable = true
+        binding.linearLayout5.setOnClickListener {
+            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
+        }
+        binding.linearLayout3.setOnClickListener {
+            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
+        }
+        binding.knowInstructions.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
+        }
+    }
+
 }

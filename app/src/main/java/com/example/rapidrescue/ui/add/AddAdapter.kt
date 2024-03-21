@@ -43,9 +43,7 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
 //                    listener?.onEditNumberBtnClicked(this)
 //                }
             }
-
         }
-
     }
 
     override fun getItemCount(): Int {

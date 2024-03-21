@@ -125,7 +125,6 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
                                                             Toast.makeText(context, "Deleted Successfully", Toast.LENGTH_SHORT).show()
                                                         } else {
                                                             Toast.makeText(context, "Deletion failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                                                            Log.e("DeleteError", "Deletion failed", task.exception)
                                                         }
                                                     }
                                             }
