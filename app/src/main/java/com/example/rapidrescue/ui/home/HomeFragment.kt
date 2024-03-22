@@ -52,6 +52,7 @@ class HomeFragment : Fragment() {
 
         disableClickableElements()
 
+
 //        binding.linearLayout5.setOnClickListener {
 //            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
 //        }
@@ -66,15 +67,16 @@ class HomeFragment : Fragment() {
 
         readData()
 
-        val callback = object : OnBackPressedCallback(true) {
+
+         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // Do nothing or handle as needed
+            // Do nothing or handle as needed
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
-
     }
+
+
 
     private fun readData() {
         databaseReference.child("Users").get().addOnCompleteListener { task ->
@@ -99,6 +101,8 @@ class HomeFragment : Fragment() {
             enableClickableElements()
         }
     }
+
+
 
 
     override fun onDestroyView() {
@@ -130,6 +134,7 @@ class HomeFragment : Fragment() {
         binding.knowInstructions.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
         }
-    }
 
+
+    }
 }
