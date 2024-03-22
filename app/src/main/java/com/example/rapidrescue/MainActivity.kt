@@ -1,8 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.rapidrescue
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,6 +24,7 @@ class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         window.setFlags(FLAG_LAYOUT_NO_LIMITS, FLAG_LAYOUT_IN_SCREEN)
 
         auth = FirebaseAuth.getInstance()
@@ -44,6 +49,28 @@ class MainActivity : AppCompatActivity(){
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Show the exit confirmation dialog when the back button is pressed
+        showExitConfirmationDialog()
+    }
+
+    private fun showExitConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Exit")
+        builder.setMessage("Are you sure you want to exit?")
+        builder.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+            // Exit the application
+            finishAffinity() // This will finish all activities in the task associated with the application
+        }
+        builder.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
+            // Do nothing, just close the dialog
+            dialogInterface.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
 }

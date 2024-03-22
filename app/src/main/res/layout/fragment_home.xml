@@ -76,7 +76,7 @@
                         android:textSize="18sp"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="(Loading Profile...)"
+                        android:text=""
                         />
 
 
@@ -141,6 +141,7 @@
                     />
             </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/black"
@@ -201,6 +202,7 @@
                     />
             </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_margin="10dp"
                 android:backgroundTint="@color/black"
@@ -270,7 +272,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminate="true" />
+            android:indeterminate="true"/>
 
     </FrameLayout>
 
