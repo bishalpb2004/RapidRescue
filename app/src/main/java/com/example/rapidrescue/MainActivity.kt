@@ -4,26 +4,36 @@ package com.example.rapidrescue
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rapidrescue.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-class MainActivity : AppCompatActivity(){
+
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
 
+    private lateinit var drawerlayout: DrawerLayout
+    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var navigationview: NavigationView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         window.setFlags(FLAG_LAYOUT_NO_LIMITS, FLAG_LAYOUT_IN_SCREEN)
 
@@ -33,7 +43,17 @@ class MainActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setIcon(R.drawable.emergency_11)
+        supportActionBar?.setIcon(R.drawable.hamburger)
+
+
+        drawerlayout = findViewById(R.id.drawer_layout)
+        navigationview = findViewById(R.id.navigation_view)
+
+        toggle = ActionBarDrawerToggle(this, drawerlayout, R.string.start, R.string.close)
+
+        drawerlayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navigationview.setNavigationItemSelectedListener(this)
 
 
         val navView: BottomNavigationView = binding.navView
@@ -57,6 +77,7 @@ class MainActivity : AppCompatActivity(){
         showExitConfirmationDialog()
     }
 
+
     private fun showExitConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Exit")
@@ -71,6 +92,19 @@ class MainActivity : AppCompatActivity(){
         }
         val dialog = builder.create()
         dialog.show()
+    }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item)){
+            return true
+        }
+        return true
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return true
     }
 
 }

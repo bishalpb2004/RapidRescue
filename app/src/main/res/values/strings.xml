@@ -18,4 +18,10 @@
     <string name="chatbot_">ChatBot</string>
     <string name="developers">{/Developers}</string>
     <string name="dev">Developers</string>
+    <string name="settings">Settings</string>
+    <string name="panic_button">Panic Button</string>
+    <string name="rate_us">Rate us</string>
+
+    <string name="start">Start</string>
+    <string name="close">Close</string>
 </resources>
