@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+
+        <item
+            android:id="@+id/settings"
+            android:title="Settings"
+            android:icon="@drawable/settings"/>
+
+        <item
+            android:id="@+id/panic_button"
+            android:title="Panic Button"
+            android:icon="@drawable/panic_button"/>
+
+        <item
+            android:id="@+id/rate_us"
+            android:title="Rate us"
+            android:icon="@drawable/rate_us"/>
+    </group>
+
+</menu>
