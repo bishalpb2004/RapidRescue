@@ -124,9 +124,9 @@
 
     <fragment
         android:id="@+id/navigation_chatbot"
-        android:name="com.example.rapidrescue.chatbot"
+        android:name="com.example.rapidrescue.proximity"
         android:label="RapidRescue"
-        tools:layout="@layout/fragment_chatbot"/>
+        tools:layout="@layout/fragment_proximity"/>
     <fragment
         android:id="@+id/developers_btn"
         android:name="com.example.rapidrescue.developers"

@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [chatbot.newInstance] factory method to
+ * Use the [proximity.newInstance] factory method to
  * create an instance of this fragment.
  */
-class chatbot : Fragment() {
+class proximity : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -36,7 +36,7 @@ class chatbot : Fragment() {
     ): View? {
         Toast.makeText(requireContext(), "Under development", Toast.LENGTH_LONG).show()
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chatbot, container, false)
+        return inflater.inflate(R.layout.fragment_proximity, container, false)
 
     }
 
@@ -44,7 +44,7 @@ class chatbot : Fragment() {
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            chatbot().apply {
+            proximity().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
