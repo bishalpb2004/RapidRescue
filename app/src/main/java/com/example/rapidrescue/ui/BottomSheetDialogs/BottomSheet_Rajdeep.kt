@@ -27,7 +27,7 @@ class BottomSheet_Rajdeep : BottomSheetDialogFragment() {
 
         binding.gitIcon.setOnClickListener {
             val intent= Intent(Intent.ACTION_VIEW)
-            intent.data= Uri.parse("https://github.com/Domestikus")
+            intent.data= Uri.parse("https://github.com/Rajdeepsark")
             startActivity(intent)
         }
 

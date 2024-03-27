@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.rapidrescue.databinding.FragmentFetchUserDataBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -19,6 +20,7 @@ class FetchUserDataFragment : Fragment() {
     private lateinit var binding: FragmentFetchUserDataBinding
     private lateinit var navController: NavController
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var auth:FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +33,8 @@ class FetchUserDataFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        auth= FirebaseAuth.getInstance()
         navController=Navigation.findNavController(view)
         databaseReference = FirebaseDatabase.getInstance().reference
 
@@ -40,15 +44,14 @@ class FetchUserDataFragment : Fragment() {
 
         this.readData()
 
-
-
     }
 
     @SuppressLint("SetTextI18n")
     private fun readData() {
 
-
-        databaseReference.child("Users").get().addOnSuccessListener {
+        databaseReference.ref.child("Users")
+            .child(auth.currentUser?.uid.toString())
+            .get().addOnSuccessListener {
 
             if (it.exists()){
                 for (userSnapshot in it.children) {
@@ -61,7 +64,6 @@ class FetchUserDataFragment : Fragment() {
                     binding.tvPhone.text = "Phone Number : $phNumber"
                 }
 
-
             }else{
 
                 Toast.makeText(context,"User does not exist", Toast.LENGTH_LONG).show()
@@ -70,8 +72,6 @@ class FetchUserDataFragment : Fragment() {
         }.addOnFailureListener {
             Toast.makeText(context,it.message,Toast.LENGTH_LONG).show()
         }
-
-
 
     }
 

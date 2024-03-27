@@ -14,6 +14,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentHomeBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -21,6 +22,8 @@ class HomeFragment : Fragment() {
     private lateinit var navController:NavController
     private var _binding: FragmentHomeBinding? = null
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -46,7 +49,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        auth= FirebaseAuth.getInstance()
         navController=Navigation.findNavController(view)
         databaseReference = FirebaseDatabase.getInstance().reference
 
@@ -79,7 +82,9 @@ class HomeFragment : Fragment() {
 
 
     private fun readData() {
-        databaseReference.child("Users").get().addOnCompleteListener { task ->
+        databaseReference.ref.child("Users")
+            .child(auth.currentUser?.uid.toString())
+            .get().addOnCompleteListener { task ->
             // Hide loading overlay regardless of success or failure
             binding.loadingOverlay.visibility = View.GONE
 
