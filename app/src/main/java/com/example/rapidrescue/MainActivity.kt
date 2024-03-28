@@ -1,11 +1,8 @@
-@file:Suppress("DEPRECATION")
-
 package com.example.rapidrescue
 
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -15,17 +12,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rapidrescue.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
-
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var navigationView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,39 +27,46 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setIcon(R.drawable.our_logo11)
-
         drawerLayout = binding.drawerLayout
-        navigationView = binding.navigationView
 
-        toggle = ActionBarDrawerToggle(
-            this, drawerLayout, R.string.start,
-            R.string.close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        navigationView.setNavigationItemSelectedListener(this)
-
+        // Setup bottom navigation
+        val bottomNavView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        bottomNavView.setupWithNavController(navController)
+
+        // Configure action bar with navigation controller
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,
-                R.id.navigation_chatbot
-            ), drawerLayout
+                R.id.navigation_home, R.id.navigation_dashboard,
+                R.id.navigation_notifications, R.id.navigation_chatbot
+            )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.navView.setupWithNavController(navController)
+
+        bottomNavView.setOnNavigationItemSelectedListener { menuItem ->
+            navigateToDestination(menuItem)
+            true
+        }
+    }
+
+    private fun navigateToDestination(menuItem: MenuItem) {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        when (menuItem.itemId) {
+            R.id.navigation_home -> navController.navigate(R.id.navigation_home)
+            R.id.navigation_dashboard -> navController.navigate(R.id.navigation_dashboard)
+            R.id.navigation_notifications -> navController.navigate(R.id.navigation_notifications)
+            R.id.navigation_chatbot -> navController.navigate(R.id.navigation_chatbot)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {
@@ -80,40 +81,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Exit")
         builder.setMessage("Are you sure you want to exit?")
-        builder.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+        builder.setPositiveButton("Yes") { _, _ ->
             // Exit the application
-            finishAffinity() // This will finish all activities in the task associated with the application
+            finishAffinity()
         }
-        builder.setNegativeButton("No") { dialogInterface: DialogInterface, i: Int ->
-            // Do nothing, just close the dialog
-            dialogInterface.dismiss()
+        builder.setNegativeButton("No") { dialog, _ ->
+            // Dismiss the dialog
+            dialog.dismiss()
         }
         val dialog = builder.create()
         dialog.show()
     }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.settings -> {
-                // Handle navigation to settings fragment
-                // For example:
-                // findNavController().navigate(R.id.settingsFragment)
-            }
-            R.id.panic_button -> {
-                // Handle navigation to panic button fragment
-                // For example:
-                // findNavController().navigate(R.id.panicButtonFragment)
-            }
-            R.id.rate_us -> {
-                // Handle navigation to rate us fragment
-                // For example:
-                // findNavController().navigate(R.id.rateUsFragment)
-            }
-        }
-
-        // Close the navigation drawer after handling the click
-        drawerLayout.closeDrawer(GravityCompat.START)
-
-        return true
-    }
 }
+
+

@@ -23,6 +23,7 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import java.util.concurrent.TimeUnit
 
+
 class OTPActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth

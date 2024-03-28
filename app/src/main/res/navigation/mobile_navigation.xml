@@ -25,6 +25,9 @@
             app:destination="@id/instructionsFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_home_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
 
     <fragment
@@ -96,7 +99,8 @@
     <fragment
         android:id="@+id/SOSMessageFragment"
         android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessage"
-        android:label="SOSMessageFragment" >
+        android:label="SOSMessageFragment"
+        tools:layout="@layout/fragment_s_o_s_message">
         <action
             android:id="@+id/action_SOSMessageFragment_to_registeredNumbersFragment"
             app:destination="@id/registeredNumbersFragment"
@@ -115,7 +119,8 @@
     <fragment
         android:id="@+id/instructionsFragment"
         android:name="com.example.rapidrescue.ui.Instructions.InstructionsFragment"
-        android:label="RapidRescue" />
+        android:label="RapidRescue"
+        tools:layout="@layout/fragment_instructions"/>
     <fragment
         android:id="@+id/fetchUserDataFragment"
         android:name="com.example.rapidrescue.ui.FetchUserDataFragment"
