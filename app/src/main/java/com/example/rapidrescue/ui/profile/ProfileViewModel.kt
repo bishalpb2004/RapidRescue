@@ -1,4 +1,4 @@
-package com.example.rapidrescue.ui.notifications
+package com.example.rapidrescue.ui.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

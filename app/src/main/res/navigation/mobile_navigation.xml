@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.rapidrescue.ui.notifications.ProfileFragment"
+        android:name="com.example.rapidrescue.ui.profile.ProfileFragment"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_profile" >
         <action
