@@ -1,6 +1,7 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.rapidrescue
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -34,12 +35,13 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         bottomNavView.setupWithNavController(navController)
 
-        // Configure action bar with navigation controller
+        // Configure action bar with navigation controller and drawer layout
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.navigation_dashboard,
                 R.id.navigation_notifications, R.id.navigation_chatbot
-            )
+            ),
+            drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -65,11 +67,13 @@ class MainActivity : AppCompatActivity() {
                 drawerLayout.openDrawer(GravityCompat.START)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
@@ -81,17 +85,8 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Exit")
         builder.setMessage("Are you sure you want to exit?")
-        builder.setPositiveButton("Yes") { _, _ ->
-            // Exit the application
-            finishAffinity()
-        }
-        builder.setNegativeButton("No") { dialog, _ ->
-            // Dismiss the dialog
-            dialog.dismiss()
-        }
-        val dialog = builder.create()
-        dialog.show()
     }
 }
+
 
 

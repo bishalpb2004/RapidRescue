@@ -2,7 +2,6 @@ package com.example.rapidrescue.ui.RegisteredNumbers
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,7 @@ import com.example.rapidrescue.databinding.FragmentRegisteredNumbersBinding
 import com.example.rapidrescue.ui.PopUpFragment
 import com.example.rapidrescue.ui.add.AddAdapter
 import com.example.rapidrescue.ui.add.AddDataModel
-import com.example.rapidrescue.ui.notifications.ProfileViewModel
+import com.example.rapidrescue.ui.profile.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

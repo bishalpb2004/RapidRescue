@@ -24,6 +24,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import java.util.concurrent.TimeUnit
 
 
+@Suppress("DEPRECATION")
 class OTPActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
