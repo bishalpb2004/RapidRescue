@@ -4,19 +4,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    >
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
+        android:drawingCacheQuality="auto"
+        android:layout_marginBottom="100dp"
         android:orientation="vertical">
 
-        <com.google.android.gms.maps.MapView
+        <fragment
             android:id="@+id/map_view"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+        />
 
 
     </LinearLayout>
@@ -25,8 +29,9 @@
 
     <!-- RecyclerView for food items -->
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         android:backgroundTint="@color/white"
         android:background="@drawable/edit_background">
