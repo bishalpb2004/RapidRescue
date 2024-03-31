@@ -66,7 +66,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
 
     //Animation gif
-    implementation("com.airbnb.android:lottie:3.4.0")
+    implementation("com.airbnb.android:lottie:6.0.0")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
     //For AI bot
     implementation("com.squareup.okhttp3:okhttp:4.12.0")

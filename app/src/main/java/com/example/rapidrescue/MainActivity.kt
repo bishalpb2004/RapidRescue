@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    
     override fun onBackPressed() {
         super.onBackPressed()
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
