@@ -75,4 +75,7 @@ dependencies {
     //For AI bot
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
+    implementation ("com.google.android.libraries.places:places:2.4.0")
+
+
 }
