@@ -70,6 +70,7 @@ class AfterProfileFragment : Fragment() {
 
                         Toast.makeText(context,"User added successfully",Toast.LENGTH_LONG).show()
 
+
                 }.addOnFailureListener {
                         Toast.makeText(context,"User could not be added ",Toast.LENGTH_LONG).show()
 
@@ -81,6 +82,7 @@ class AfterProfileFragment : Fragment() {
 
             navigateToNextFragment()
             makeButtonInvisible()
+
         }else if (name.isEmpty()){
             Toast.makeText(context,"Fill up your name",Toast.LENGTH_SHORT).show()
 
@@ -94,6 +96,7 @@ class AfterProfileFragment : Fragment() {
         }
 
     }
+
 
     private fun makeButtonInvisible() {
         binding.btnSaveProfile.visibility=View.GONE

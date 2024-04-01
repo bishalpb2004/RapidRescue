@@ -14,11 +14,16 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentHomeBinding
+import com.example.rapidrescue.ui.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
+
     private lateinit var navController:NavController
     private var _binding: FragmentHomeBinding? = null
     private lateinit var databaseReference: DatabaseReference
@@ -51,25 +56,19 @@ class HomeFragment : Fragment() {
 
         auth= FirebaseAuth.getInstance()
         navController=Navigation.findNavController(view)
-        databaseReference = FirebaseDatabase.getInstance().reference
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
         disableClickableElements()
 
-
-//        binding.linearLayout5.setOnClickListener {
-//            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
-//        }
-//        binding.linearLayout3.setOnClickListener{
-//            navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
-//        }
-//        binding.knowInstructions.setOnClickListener {
-//            findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
-//        }
-
         binding.loadingOverlay.visibility = View.VISIBLE
 
-        readData()
+//        readData()
 
+        auth.currentUser?.let {
+            readUserData(it.uid)
+        }?:run {
+            Toast.makeText(context,"User Not Authenticated",Toast.LENGTH_SHORT).show()
+        }
 
          val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -79,33 +78,62 @@ class HomeFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
+    private fun readUserData(userId: String) {
 
+        databaseReference.child(userId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
 
-    private fun readData() {
-        databaseReference.ref.child("Users")
-            .child(auth.currentUser?.uid.toString())
-            .get().addOnCompleteListener { task ->
-            // Hide loading overlay regardless of success or failure
-            binding.loadingOverlay.visibility = View.GONE
+                        val user = dataSnapshot.getValue(User::class.java)
 
-            if (task.isSuccessful) {
-                val snapshot = task.result
-                if (snapshot != null && snapshot.exists()) {
-                    for (userSnapshot in snapshot.children) {
-                        val name = userSnapshot.child("name").value
-                        binding.textviewName.text = "$name"
+                        binding.loadingOverlay.visibility = View.GONE
+
+                        user?.let {
+
+                            binding.textviewName.text = it.name
+
+                        }
+                    } else {
+                        Toast.makeText(context, "User data not found", Toast.LENGTH_LONG).show()
                     }
-                } else {
-                    Toast.makeText(context, "User does not exist", Toast.LENGTH_LONG).show()
+
+                    enableClickableElements()
+
                 }
-            } else {
-                // Handle failure case
-                Toast.makeText(context, task.exception?.message ?: "Failed to fetch data", Toast.LENGTH_LONG).show()
-            }
-            // Enable clickable elements after data loading completes
-            enableClickableElements()
-        }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Toast.makeText(context, "Failed to read user data", Toast.LENGTH_LONG).show()
+                }
+            })
     }
+
+
+//    private fun readData() {
+//        databaseReference.ref.child("Users")
+//            .child(auth.currentUser?.uid.toString())
+//            .get().addOnCompleteListener { task ->
+//            // Hide loading overlay regardless of success or failure
+//            binding.loadingOverlay.visibility = View.GONE
+//
+//            if (task.isSuccessful) {
+//                val snapshot = task.result
+//                if (snapshot != null && snapshot.exists()) {
+//                    for (userSnapshot in snapshot.children) {
+//                        val name = userSnapshot.child("name").value
+//                        binding.textviewName.text = "$name"
+//                    }
+//                } else {
+//                    Toast.makeText(context, "User does not exist", Toast.LENGTH_LONG).show()
+//                }
+//            } else {
+//                // Handle failure case
+//                Toast.makeText(context, task.exception?.message ?: "Failed to fetch data", Toast.LENGTH_LONG).show()
+//            }
+//            // Enable clickable elements after data loading completes
+//            enableClickableElements()
+//        }
+//    }
 
 
 

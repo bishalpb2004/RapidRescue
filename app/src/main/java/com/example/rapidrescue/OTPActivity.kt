@@ -14,6 +14,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.rapidrescue.ui.AfterProfileFragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
@@ -54,6 +55,9 @@ class OTPActivity : AppCompatActivity() {
         phoneNumber = intent.getStringExtra("phoneNumber")!!
 
         init()
+
+
+
         progressBar.visibility = View.INVISIBLE
         addTextChangeListener()
         resendOTPTvVisibility()
@@ -65,6 +69,10 @@ class OTPActivity : AppCompatActivity() {
 
         verifyBtn.setOnClickListener {
             //collect otp from all the edit texts
+            if (auth.currentUser!=null){
+                sendToMain()
+            }
+
             val typedOTP =
                 (inputOTP1.text.toString() + inputOTP2.text.toString() + inputOTP3.text.toString()
                         + inputOTP4.text.toString() + inputOTP5.text.toString() + inputOTP6.text.toString())
@@ -76,6 +84,7 @@ class OTPActivity : AppCompatActivity() {
                     )
                     progressBar.visibility = View.VISIBLE
                     signInWithPhoneAuthCredential(credential)
+                    sendToProfile()
                 } else {
                     Toast.makeText(this, "Please Enter Correct OTP", Toast.LENGTH_SHORT).show()
                 }
@@ -85,6 +94,10 @@ class OTPActivity : AppCompatActivity() {
 
 
         }
+    }
+
+    private fun sendToMain() {
+        startActivity(Intent(this,MainActivity::class.java))
     }
 
     private fun resendOTPTvVisibility() {
@@ -161,7 +174,8 @@ class OTPActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
 
                     Toast.makeText(this, "Authenticate Successfully", Toast.LENGTH_SHORT).show()
-                    sendToMain()
+
+
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG", "signInWithPhoneAuthCredential: ${task.exception.toString()}")
@@ -172,12 +186,14 @@ class OTPActivity : AppCompatActivity() {
                     }
                     // Update UI
                 }
+
                 progressBar.visibility = View.VISIBLE
             }
     }
 
-    private fun sendToMain() {
-        startActivity(Intent(this, MainActivity::class.java))
+    private fun sendToProfile() {
+        startActivity(Intent(this,ProfileActivity::class.java))
+        finish()
     }
 
     private fun addTextChangeListener() {

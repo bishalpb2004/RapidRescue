@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentDashboardBinding
 
 
@@ -50,6 +51,11 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController=Navigation.findNavController(view)
+
+        binding.developersBtn.setOnClickListener {
+            navController.navigate(R.id.action_navigation_dashboard_to_developers_btn)
+        }
+
         binding.btnHygieneIssues.setOnClickListener {
             val intent=Intent(Intent.ACTION_VIEW)
             intent.data= Uri.parse("https://www.psychologytoday.com/intl/blog/crucial-conversations/201510/6-ways-tactfully-bring-personal-hygiene-issues")

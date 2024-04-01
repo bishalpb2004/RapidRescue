@@ -69,7 +69,7 @@ class PhoneActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Toast.makeText(this , "Authenticate Successfully" , Toast.LENGTH_SHORT).show()
-                    sendToMain()
+                    sendToProfile()
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("TAG", "signInWithPhoneAuthCredential: ${task.exception.toString()}")
@@ -84,7 +84,7 @@ class PhoneActivity : AppCompatActivity() {
             }
     }
 
-    private fun sendToMain(){
+    private fun sendToProfile(){
         startActivity(Intent(this , MainActivity::class.java))
     }
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {

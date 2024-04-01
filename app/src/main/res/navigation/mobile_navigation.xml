@@ -34,7 +34,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.rapidrescue.ui.dashboard.DashboardFragment"
         android:label="RapidRescue"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_developers_btn"
+            app:destination="@id/developers_btn" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -145,5 +149,9 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpToInclusive="false" />
     </fragment>
+    <activity
+        android:id="@+id/OTPActivity"
+        android:name="com.example.rapidrescue.OTPActivity"
+        android:label="OTPActivity" />
 
 </navigation>

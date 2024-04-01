@@ -8,9 +8,7 @@
 
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="true">
-
-    </uses-feature>
+        android:required="true"></uses-feature>
 
     <uses-permission android:name="android.permission.SEND_SMS" />
 
@@ -25,22 +23,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RapidRescue"
         tools:targetApi="tiramisu">
-
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true" />
         <activity
             android:name=".OTPActivity"
-            android:exported="false"/>
-
+            android:exported="true" />
         <activity
             android:name=".PhoneActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
