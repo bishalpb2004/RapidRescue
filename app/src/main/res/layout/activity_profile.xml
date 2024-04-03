@@ -34,7 +34,8 @@
             app:hintEnabled="false"
             android:background="@drawable/border"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
+            app:boxStrokeWidthFocused="0dp"
+            app:cursorColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameEtProfile"
@@ -45,7 +46,9 @@
                 android:background="@drawable/border"
                 android:hint="Name"
                 android:inputType="text"
-                android:paddingLeft="16dp" />
+                android:paddingLeft="16dp"
+                android:paddingBottom="10dp"
+                android:cursorVisible="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +66,8 @@
             app:hintEnabled="false"
             android:background="@drawable/border"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
+            app:boxStrokeWidthFocused="0dp"
+            app:cursorColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/scholarNumberProfile"
@@ -74,7 +78,9 @@
                 android:background="@drawable/border"
                 android:hint="Scholar Number"
                 android:inputType="text"
-                android:paddingLeft="16dp" />
+                android:paddingLeft="16dp"
+                android:paddingBottom="10dp"
+                android:cursorVisible="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +98,8 @@
             app:hintEnabled="false"
             android:background="@drawable/border"
             app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp">
+            app:boxStrokeWidthFocused="0dp"
+            app:cursorColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phoneNumberProfile"
@@ -103,7 +110,9 @@
                 android:background="@drawable/border"
                 android:hint="Phone Number"
                 android:inputType="text"
-                android:paddingLeft="16dp" />
+                android:paddingLeft="16dp"
+                android:paddingBottom="10dp"
+                android:cursorVisible="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

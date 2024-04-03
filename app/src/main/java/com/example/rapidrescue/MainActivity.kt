@@ -4,7 +4,7 @@ package com.example.rapidrescue
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
+    private var backPressedTime = 0L
+    private val delay = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
+    //For bottom navigation
     private fun navigateToDestination(menuItem: MenuItem) {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         when (menuItem.itemId) {
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_chatbot -> navController.navigate(R.id.navigation_chatbot)
         }
     }
-
+    //For opening and closing drawer layout
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -75,22 +77,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    
+    //For closing the application
     override fun onBackPressed() {
-        super.onBackPressed()
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
         } else {
-            showExitConfirmationDialog()
+            if (backPressedTime + delay > System.currentTimeMillis()) {
+                super.onBackPressed() // Call super only when not handling navigation drawer
+            } else {
+                Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
+            }
+            backPressedTime = System.currentTimeMillis()
         }
     }
 
-    private fun showExitConfirmationDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Exit")
-        builder.setMessage("Are you sure you want to exit?")
-    }
 }
-
-
-
