@@ -1,5 +1,6 @@
 package com.example.rapidrescue.ui.home
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +25,7 @@ import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
 
-    private lateinit var navController:NavController
+    private lateinit var navController: NavController
     private var _binding: FragmentHomeBinding? = null
     private lateinit var databaseReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
@@ -62,20 +63,29 @@ class HomeFragment : Fragment() {
 
         binding.loadingOverlay.visibility = View.VISIBLE
 
-//        readData()
-
         auth.currentUser?.let {
             readUserData(it.uid)
         }?:run {
             Toast.makeText(context,"User Not Authenticated",Toast.LENGTH_SHORT).show()
         }
 
-         val callback = object : OnBackPressedCallback(true) {
+        val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-            // Do nothing or handle as needed
+                showExitDialog()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    private fun showExitDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Exit")
+            .setMessage("Are you sure you want to exit?")
+            .setPositiveButton("Yes") { _, _ ->
+                requireActivity().finishAffinity()
+            }
+            .setNegativeButton("No", null)
+            .show()
     }
 
     private fun readUserData(userId: String) {
@@ -108,36 +118,6 @@ class HomeFragment : Fragment() {
             })
     }
 
-
-//    private fun readData() {
-//        databaseReference.ref.child("Users")
-//            .child(auth.currentUser?.uid.toString())
-//            .get().addOnCompleteListener { task ->
-//            // Hide loading overlay regardless of success or failure
-//            binding.loadingOverlay.visibility = View.GONE
-//
-//            if (task.isSuccessful) {
-//                val snapshot = task.result
-//                if (snapshot != null && snapshot.exists()) {
-//                    for (userSnapshot in snapshot.children) {
-//                        val name = userSnapshot.child("name").value
-//                        binding.textviewName.text = "$name"
-//                    }
-//                } else {
-//                    Toast.makeText(context, "User does not exist", Toast.LENGTH_LONG).show()
-//                }
-//            } else {
-//                // Handle failure case
-//                Toast.makeText(context, task.exception?.message ?: "Failed to fetch data", Toast.LENGTH_LONG).show()
-//            }
-//            // Enable clickable elements after data loading completes
-//            enableClickableElements()
-//        }
-//    }
-
-
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -167,7 +147,5 @@ class HomeFragment : Fragment() {
         binding.knowInstructions.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
         }
-
-
     }
 }
