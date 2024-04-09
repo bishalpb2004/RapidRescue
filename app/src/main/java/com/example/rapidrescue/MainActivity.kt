@@ -4,7 +4,6 @@ package com.example.rapidrescue
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -21,8 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
-    private var backPressedTime = 0L
-    private val delay = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,20 +71,6 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    //For closing the application
-    override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            if (backPressedTime + delay > System.currentTimeMillis()) {
-                super.onBackPressed() // Call super only when not handling navigation drawer
-            } else {
-                Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show()
-            }
-            backPressedTime = System.currentTimeMillis()
         }
     }
 
