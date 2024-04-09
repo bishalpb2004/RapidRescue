@@ -8,7 +8,9 @@
 
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="true"></uses-feature>
+        android:required="true">
+
+    </uses-feature>
 
     <uses-permission android:name="android.permission.SEND_SMS" />
 

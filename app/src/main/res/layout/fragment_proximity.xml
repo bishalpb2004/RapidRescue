@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -46,6 +45,7 @@
                 android:layout_marginTop="20dp">
 
                 <Button
+                    android:id="@+id/btnPolice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -56,6 +56,7 @@
                     android:backgroundTint="#696969"/>
 
                 <Button
+                    android:id="@+id/btnHospital"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
