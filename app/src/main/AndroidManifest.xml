@@ -8,9 +8,7 @@
 
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="true">
-
-    </uses-feature>
+        android:required="true" />
 
     <uses-permission android:name="android.permission.SEND_SMS" />
 
@@ -25,6 +23,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RapidRescue"
         tools:targetApi="tiramisu">
+        <activity
+            android:name=".ui.WeatherSafety.WeatherSafety"
+            android:exported="false" />
+        <activity
+            android:name=".ui.RoadSafety.RoadSafety"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PanicButton.PanicButton"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PersonalSafety.PersonalSafety"
+            android:exported="false" />
         <activity
             android:name=".ProfileActivity"
             android:exported="true" />
@@ -43,9 +53,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
+            android:parentActivityName=".MainActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -52,27 +52,28 @@
         </LinearLayout>
 
 
-        <ImageView
-
-            android:visibility="invisible"
+        <ImageButton
             android:id="@+id/editNumber"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
             android:layout_marginEnd="12dp"
-            android:src="@drawable/vector"
+            android:src="@drawable/phone_call"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/deleteNumber"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="#353535"/>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/deleteNumber"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/baseline_delete_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="#353535"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
