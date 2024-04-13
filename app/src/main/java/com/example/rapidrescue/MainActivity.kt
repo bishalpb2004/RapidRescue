@@ -1,9 +1,10 @@
 @file:Suppress("DEPRECATION")
-
 package com.example.rapidrescue
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,6 +13,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rapidrescue.databinding.ActivityMainBinding
+import com.example.rapidrescue.ui.PanicButton.PanicButton
+import com.example.rapidrescue.ui.PersonalSafety.PersonalSafety
+import com.example.rapidrescue.ui.RoadSafety.RoadSafety
+import com.example.rapidrescue.ui.WeatherSafety.WeatherSafety
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -20,11 +25,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setUpDrawerLayout()
 
         auth = FirebaseAuth.getInstance()
         drawerLayout = binding.drawerLayout
@@ -65,12 +73,46 @@ class MainActivity : AppCompatActivity() {
             android.R.id.home -> {
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START)
+                    true
                 } else {
-                    drawerLayout.openDrawer(GravityCompat.START)
+                    drawerLayout.openDrawer(GravityCompat.START) // Open the drawer first
+                    true
                 }
-                true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    //For opening options in the drawer layout
+    private fun setUpDrawerLayout() {
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this, binding.drawerLayout,
+            R.string.app_name,
+            R.string.app_name
+        )
+        actionBarDrawerToggle.syncState()
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.personal_safety -> {
+                    val intent = Intent(this, PersonalSafety::class.java)
+                    startActivity(intent)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                R.id.panic_button -> {
+                        val intent = Intent(this, PanicButton::class.java)
+                        startActivity(intent)
+                }
+                R.id.road_safety -> {
+                    val intent = Intent(this, RoadSafety::class.java)
+                    startActivity(intent)
+                }
+                R.id.weather_safety -> {
+                    val intent = Intent(this, WeatherSafety::class.java)
+                    startActivity(intent)
+                }
+            }
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            true
         }
     }
 

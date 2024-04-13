@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_navigation"
+    app:startDestination="@+id/drawer_layout">
+
+    <activity
+        android:id="@+id/navigation_personal_safety"
+        android:name="com.example.rapidrescue.ui.PersonalSafety.PersonalSafety"
+        android:label="Personal Safety"
+        tools:layout="@layout/activity_personal_safety"/>
+
+    <activity
+        android:id="@+id/navigation_panic_button"
+        android:name="com.example.rapidrescue.ui.PanicButton.PanicButton"
+        android:label="Panic Button"
+        tools:layout="@layout/activity_panic_button"/>
+
+    <activity
+        android:id="@+id/navigation_road_safety"
+        android:name="com.example.rapidrescue.ui.RoadSafety.RoadSafety"
+        android:label="Road Safety"
+        tools:layout="@layout/activity_road_safety"/>
+
+    <activity
+        android:id="@+id/navigation_weather_safety"
+        android:name="com.example.rapidrescue.ui.WeatherSafety.WeatherSafety"
+        tools:label="Weather Safety"
+        tools:layout="@layout/activity_weather_safety"/>
+
+
+</navigation>
