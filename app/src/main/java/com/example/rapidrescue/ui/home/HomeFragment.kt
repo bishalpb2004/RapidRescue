@@ -59,6 +59,8 @@ class HomeFragment : Fragment() {
         navController=Navigation.findNavController(view)
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
+        databaseReference.keepSynced(true)
+
         disableClickableElements()
 
         binding.loadingOverlay.visibility = View.VISIBLE
