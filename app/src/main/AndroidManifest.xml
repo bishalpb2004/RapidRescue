@@ -19,6 +19,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/our_logo"
         android:label="@string/app_name"
+        android:name=".FirebaseOffline"
         android:roundIcon="@drawable/our_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.RapidRescue"
