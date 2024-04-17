@@ -1,21 +1,28 @@
-package com.example.rapidrescue.ui.PersonalSafety
+package com.example.rapidrescue
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.rapidrescue.R
 
-class PersonalSafety : AppCompatActivity() {
+class splash_screen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_personal_safety)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.personalSafety)) { v, insets ->
+        setContentView(R.layout.activity_splash_screen)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        Handler().postDelayed({
+            val intent = Intent(this@splash_screen, PhoneActivity::class.java)
+            startActivity(intent)
+        }, 1000)
+
     }
 }
