@@ -3,6 +3,7 @@ package com.example.rapidrescue
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.Window
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +14,9 @@ class splash_screen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        window?.apply {
-            // Add FLAG_FULLSCREEN to the window flags
-            addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        }
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        supportActionBar?.hide()
 
 
         setContentView(R.layout.activity_splash_screen)
