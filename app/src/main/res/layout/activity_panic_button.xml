@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,14 +8,92 @@
     android:layout_height="match_parent"
     tools:context=".ui.PanicButton.PanicButton">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Under development 1"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:orientation="vertical">
+
+        <!-- Police -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Police: 100"
+                android:background="@drawable/edit_background"
+                android:textColor="@color/teal_200"
+                android:clickable="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Call police emergency number in case of law enforcement issues."
+                android:textSize="14sp"
+                android:paddingStart="8dp"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+        <!-- Fire -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fire: 101"
+                android:background="@drawable/edit_background"
+                android:textColor="@color/teal_200"
+                android:clickable="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Call police emergency number in case of fire issues"
+                android:textSize="14sp"
+                android:paddingStart="8dp"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+        <!-- Ambulance -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ambulance: 102"
+                android:background="@drawable/edit_background"
+                android:textColor="@color/teal_200"
+                android:clickable="true"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Call ambulance emergency number in case of health issues"
+                android:textSize="14sp"
+                android:paddingStart="8dp"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+
+        <!-- Add more emergency numbers and descriptions as needed -->
+
+    </LinearLayout>
+
+</LinearLayout>
