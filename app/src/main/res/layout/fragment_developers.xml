@@ -209,7 +209,7 @@
         android:layout_alignParentBottom="true"
         android:textSize="17sp"
         android:textAlignment="center"
-        android:text="©2024RapidRescue.AllRightsReserved"
+        android:text=""
         android:textColor="@color/white" />
 
 

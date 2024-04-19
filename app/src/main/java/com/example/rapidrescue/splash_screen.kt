@@ -29,6 +29,7 @@ class splash_screen : AppCompatActivity() {
         Handler().postDelayed({
             val intent = Intent(this@splash_screen, PhoneActivity::class.java)
             startActivity(intent)
+            finish()
         }, 1000)
 
     }
