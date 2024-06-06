@@ -24,4 +24,5 @@
 
     <string name="start">Start</string>
     <string name="close">Close</string>
+    <string name="phone_number_in_10_digits_without_any_spaces">Phone Number(in 10 digits without any spaces)</string>
 </resources>

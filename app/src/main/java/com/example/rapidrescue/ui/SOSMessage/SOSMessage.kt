@@ -5,7 +5,6 @@ package com.example.rapidrescue.ui.SOSMessage
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -23,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.ui.RegisteredNumbers.SharedViewModel
-import java.util.*
 
 class SOSMessage : Fragment(), LocationListener {
 
@@ -34,7 +32,7 @@ class SOSMessage : Fragment(), LocationListener {
     private val SMS_PERMISSION_CODE = 100
     private lateinit var messageEditText: EditText
     private lateinit var locationManager: LocationManager
-    private var currentAddress: String = "Location not available"
+    private var currentLocation: Location? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,7 +81,11 @@ class SOSMessage : Fragment(), LocationListener {
     private fun sendSMSWithLocation(message: String, phoneNumber: String) {
         try {
             val smsManager: SmsManager = SmsManager.getDefault()
-            val finalMessage = "$message\n\nLocation: $currentAddress"
+            val locationLink = currentLocation?.let {
+                "https://maps.google.com/?q=${it.latitude},${it.longitude}"
+            } ?: "Location not available"
+
+            val finalMessage = "$message\n\nLocation: $locationLink"
             smsManager.sendTextMessage(phoneNumber, null, finalMessage, null, null)
             Toast.makeText(requireContext(), "Message sent successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
@@ -118,18 +120,7 @@ class SOSMessage : Fragment(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
-        updateAddress(location)
-    }
-
-    private fun updateAddress(location: Location) {
-        val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        if (!addresses.isNullOrEmpty()) {
-            val address = addresses[0]
-            currentAddress = address.getAddressLine(0)
-        } else {
-            currentAddress = "Location not available"
-        }
+        currentLocation = location
     }
 
     override fun onRequestPermissionsResult(
