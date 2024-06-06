@@ -5,7 +5,9 @@ package com.example.rapidrescue.ui.SOSMessage
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.telephony.SmsManager
@@ -21,9 +23,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.ui.RegisteredNumbers.SharedViewModel
+import java.util.*
 
-@Suppress("DEPRECATION")
-class SOSMessage : Fragment() {
+class SOSMessage : Fragment(), LocationListener {
 
     private val sharedViewModel: SharedViewModel by lazy {
         ViewModelProvider(requireActivity())[SharedViewModel::class.java]
@@ -31,7 +33,8 @@ class SOSMessage : Fragment() {
 
     private val SMS_PERMISSION_CODE = 100
     private lateinit var messageEditText: EditText
-    private lateinit var phoneNumberEditText: EditText
+    private lateinit var locationManager: LocationManager
+    private var currentAddress: String = "Location not available"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +43,14 @@ class SOSMessage : Fragment() {
         val view = inflater.inflate(R.layout.fragment_s_o_s_message, container, false)
 
         messageEditText = view.findViewById(R.id.messageEditText)
-
+        locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         // Set OnClickListener for the "Send Message" button
         view.findViewById<View>(R.id.sendMessageButton).setOnClickListener {
             sendMessage()
         }
+
+        startLocationUpdates()
 
         return view
     }
@@ -75,44 +80,56 @@ class SOSMessage : Fragment() {
         }
     }
 
-
     private fun sendSMSWithLocation(message: String, phoneNumber: String) {
         try {
             val smsManager: SmsManager = SmsManager.getDefault()
-            val location = getCurrentLocation()
-            val finalMessage = "$message\n\nLocation: $location"
+            val finalMessage = "$message\n\nLocation: $currentAddress"
             smsManager.sendTextMessage(phoneNumber, null, finalMessage, null, null)
             Toast.makeText(requireContext(), "Message sent successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Failed to send message", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
         }
-
     }
 
-    private fun getCurrentLocation(): String {
-        // Check if the location permission is granted
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            // Get the user's current location
-            val locationManager =
-                requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-            val location: Location? =
-                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-
-            // Check if location is available
-            if (location != null) {
-                val latitude = location.latitude
-                val longitude = location.longitude
-                return "Latitude: $latitude, Longitude: $longitude"
-            }
+    private fun startLocationUpdates() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                SMS_PERMISSION_CODE
+            )
+            return
         }
 
-        return "Location not available"
+        locationManager.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            10000L, // Update interval in milliseconds
+            10f, // Minimum distance change in meters
+            this
+        )
+
+        locationManager.requestLocationUpdates(
+            LocationManager.NETWORK_PROVIDER,
+            10000L,
+            10f,
+            this
+        )
+    }
+
+    override fun onLocationChanged(location: Location) {
+        updateAddress(location)
+    }
+
+    private fun updateAddress(location: Location) {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+        if (!addresses.isNullOrEmpty()) {
+            val address = addresses[0]
+            currentAddress = address.getAddressLine(0)
+        } else {
+            currentAddress = "Location not available"
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -122,28 +139,20 @@ class SOSMessage : Fragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == SMS_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                grantResults[1] == PackageManager.PERMISSION_GRANTED
-            ) {
-                // Permissions granted, send the message with location
-                val message = messageEditText.text.toString().trim()
-                val _selectedPhoneNumber = sharedViewModel.selectedPhoneNumber.toString()
-                val selectedPhoneNumber1 = _selectedPhoneNumber.removeRange(0,13)
-                val selectedPhoneNumber = selectedPhoneNumber1.removeRange(10, selectedPhoneNumber1.length)
-
-                this.sendSMSWithLocation(message, selectedPhoneNumber)
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocationUpdates()
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Permission denied to send SMS or access location",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "Permission denied to access location", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun navigateBack(){
+    private fun navigateBack() {
         findNavController().navigate(R.id.action_SOSMessageFragment_to_registeredNumbersFragment)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        locationManager.removeUpdates(this)
     }
 }

@@ -70,7 +70,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
 
-
     //Animation gif
     implementation("com.airbnb.android:lottie:6.0.0")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")

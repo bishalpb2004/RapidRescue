@@ -203,7 +203,7 @@
                             android:layout_height="match_parent"
                             android:layout_centerVertical="true"
                             android:layout_centerHorizontal="true"
-                            android:hint="@string/phone_number_string"
+                            android:hint="Phone Number(in 10 digits without any spaces)"
                             android:inputType="phone"
                             style="?android:attr/borderlessButtonStyle"
                             android:gravity="start|center_vertical"
