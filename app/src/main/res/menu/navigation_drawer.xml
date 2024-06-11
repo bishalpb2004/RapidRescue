@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <group>
 
@@ -10,13 +11,9 @@
 
         <item
             android:id="@+id/panic_button"
-            android:title="Panic Button"
+            android:title="Emergency contacts"
             android:icon="@drawable/panic_button"/>
 
-        <item
-            android:id="@+id/road_safety"
-            android:title="Road Safety"
-            android:icon="@drawable/road_safety"/>
 
         <item
             android:id="@+id/weather_safety"
@@ -25,5 +22,23 @@
 
 
     </group>
+
+    <item android:title="About us">
+
+        <menu>
+
+            <item
+                android:id="@+id/developers_page"
+                android:title="Developers"
+                android:icon="@drawable/developers_btn"/>
+            <item
+                android:id="@+id/bug_report"
+                android:title="Bug report"
+                android:icon="@drawable/bug_report"/>
+
+        </menu>
+
+
+    </item>
 
 </menu>
