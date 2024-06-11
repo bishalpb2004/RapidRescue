@@ -13,9 +13,9 @@
 
     <activity
         android:id="@+id/navigation_panic_button"
-        android:name="com.example.rapidrescue.ui.PanicButton.PanicButton"
+        android:name="com.example.rapidrescue.ui.EmergencyContacts.EmergencyContacts"
         android:label="Panic Button"
-        tools:layout="@layout/activity_panic_button"/>
+        tools:layout="@layout/activity_emergen_contacts"/>
 
     <activity
         android:id="@+id/navigation_road_safety"

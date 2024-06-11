@@ -1,4 +1,4 @@
-package com.example.rapidrescue.ui.PanicButton
+package com.example.rapidrescue.ui.EmergencyContacts
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,11 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.rapidrescue.R
 
-class PanicButton : AppCompatActivity() {
+class EmergencyContacts : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_panic_button)
+        setContentView(R.layout.activity_emergen_contacts)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

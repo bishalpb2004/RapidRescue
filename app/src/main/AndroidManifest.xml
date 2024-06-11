@@ -42,7 +42,7 @@
             android:name=".ui.RoadSafety.RoadSafety"
             android:exported="false" />
         <activity
-            android:name=".ui.PanicButton.PanicButton"
+            android:name=".ui.EmergencyContacts.EmergencyContacts"
             android:exported="false" />
         <activity
             android:name=".ui.PersonalSafety.PersonalSafety"

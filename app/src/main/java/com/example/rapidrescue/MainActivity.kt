@@ -4,18 +4,19 @@ package com.example.rapidrescue
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rapidrescue.databinding.ActivityMainBinding
-import com.example.rapidrescue.ui.PanicButton.PanicButton
+import com.example.rapidrescue.ui.EmergencyContacts.EmergencyContacts
 import com.example.rapidrescue.ui.PersonalSafety.PersonalSafety
-import com.example.rapidrescue.ui.RoadSafety.RoadSafety
 import com.example.rapidrescue.ui.WeatherSafety.WeatherSafety
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -83,6 +84,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToFragment(fragment: Fragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(
+            android.R.anim.slide_in_left, // Enter animation
+            android.R.anim.slide_out_right, // Exit animation
+        )
+
+        fragmentTransaction.replace(R.id.container, fragment)
+        fragmentTransaction.commit()
+        binding.navView.visibility = View.GONE
+
+    }
+
+
     //For opening options in the drawer layout
     private fun setUpDrawerLayout() {
         actionBarDrawerToggle = ActionBarDrawerToggle(
@@ -99,13 +114,14 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START)
                 }
                 R.id.panic_button -> {
-                        val intent = Intent(this, PanicButton::class.java)
+                        val intent = Intent(this, EmergencyContacts::class.java)
                         startActivity(intent)
                 }
-                R.id.road_safety -> {
-                    val intent = Intent(this, RoadSafety::class.java)
-                    startActivity(intent)
+                R.id.developers_page -> {
+                    navigateToFragment(developers()) // Replace with your fragment class
                 }
+
+
                 R.id.weather_safety -> {
                     val intent = Intent(this, WeatherSafety::class.java)
                     startActivity(intent)
@@ -114,6 +130,8 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+
     }
+
 
 }
