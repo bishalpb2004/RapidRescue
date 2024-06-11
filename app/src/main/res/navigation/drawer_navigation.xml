@@ -18,16 +18,16 @@
         tools:layout="@layout/activity_emergen_contacts"/>
 
     <activity
-        android:id="@+id/navigation_road_safety"
-        android:name="com.example.rapidrescue.ui.RoadSafety.RoadSafety"
-        android:label="Road Safety"
-        tools:layout="@layout/activity_road_safety"/>
-
-    <activity
         android:id="@+id/navigation_weather_safety"
         android:name="com.example.rapidrescue.ui.WeatherSafety.WeatherSafety"
         tools:label="Weather Safety"
         tools:layout="@layout/activity_weather_safety"/>
+
+    <activity
+        android:id="@+id/navigation_bug_report"
+        android:name="com.example.rapidrescue.ui.BugReport.bug_report"
+        android:label="Bug Report"
+        tools:layout="@layout/activity_bug_report"/>
 
 
 </navigation>

@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rapidrescue.databinding.ActivityMainBinding
+import com.example.rapidrescue.ui.BugReport.bug_report
 import com.example.rapidrescue.ui.EmergencyContacts.EmergencyContacts
 import com.example.rapidrescue.ui.PersonalSafety.PersonalSafety
 import com.example.rapidrescue.ui.WeatherSafety.WeatherSafety
@@ -120,10 +121,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.developers_page -> {
                     navigateToFragment(developers()) // Replace with your fragment class
                 }
-
-
                 R.id.weather_safety -> {
                     val intent = Intent(this, WeatherSafety::class.java)
+                    startActivity(intent)
+                }
+                R.id.bug_report -> {
+                    val intent = Intent(this, bug_report::class.java)
                     startActivity(intent)
                 }
             }

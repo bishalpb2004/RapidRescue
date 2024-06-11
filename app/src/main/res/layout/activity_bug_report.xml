@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- activity_bug_report.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:id="@+id/main">
+
+    <EditText
+        android:id="@+id/bug_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Describe the bug"
+        android:inputType="textMultiLine"
+        android:minHeight="200dp" />
+
+    <Button
+        android:id="@+id/take_screenshot_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Screenshot"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:id="@+id/screenshot_preview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/send_bug_report_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Send Bug Report"
+        android:textColor="@color/black"/>
+</LinearLayout>

@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -26,6 +28,9 @@
         android:theme="@style/Theme.RapidRescue"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".ui.BugReport.bug_report"
+            android:exported="false" />
+        <activity
             android:name=".splash_screen"
             android:exported="true">
             <intent-filter>
@@ -33,14 +38,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.WeatherSafety.WeatherSafety"
             android:exported="false" />
         <activity
-            android:name=".ui.RoadSafety.RoadSafety"
-            android:exported="false" />
+            android:name=".ui.BugReport.bug_report"
+            android:exported="false"
+            tools:ignore="DuplicateActivity" />
         <activity
             android:name=".ui.EmergencyContacts.EmergencyContacts"
             android:exported="false" />
@@ -55,8 +60,7 @@
             android:exported="true" />
         <activity
             android:name=".PhoneActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
