@@ -8,33 +8,27 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class WeatherViewModel : ViewModel() {
-    private val repository = WeatherRepository()
+    private val weatherApiService = WeatherApiService.create()
     private val _weatherData = MutableLiveData<List<WeatherData>>()
-    val weatherData: LiveData<List<WeatherData>> get() = _weatherData
+    val weatherData: LiveData<List<WeatherData>> = _weatherData
+    private val _currentCity = MutableLiveData<String>()
+    val currentCity: LiveData<String> = _currentCity
 
     fun fetchWeatherForecast(location: String) {
         viewModelScope.launch {
             try {
-                val apiKey = "1009c909fda24ec6b0e174401241306"  // Replace with your actual API key
-                val response = repository.getWeatherForecast(location, apiKey)
-
-                // Check if API response contains forecast data
-                if (response.forecast.forecastday.size >= 7) {
-                    val forecastData = response.forecast.forecastday.take(7).map { forecastDay ->
-                        WeatherData(
-                            date = forecastDay.date,
-                            maxTemp = forecastDay.day.maxtemp_c,
-                            minTemp = forecastDay.day.mintemp_c,
-                            avgTemp = forecastDay.day.avgtemp_c,
-                            condition = forecastDay.day.condition.text
-                        )
-                    }
-
-                    _weatherData.postValue(forecastData)
-                    Log.d("WeatherViewModel", "Weather data received: $forecastData")
-                } else {
-                    Log.e("WeatherViewModel", "Insufficient forecast data in API response")
+                val response = weatherApiService.getWeatherForecast(location, "1009c909fda24ec6b0e174401241306", 7)
+                val forecastData = response.forecast.forecastday.map {
+                    WeatherData(
+                        date = it.date,
+                        maxTemp = it.day.maxtemp_c,
+                        minTemp = it.day.mintemp_c,
+                        condition = it.day.condition.text,
+                        iconUrl = it.day.condition.icon
+                    )
                 }
+                _weatherData.value = forecastData
+                _currentCity.value = response.location.name // Set the current city
             } catch (e: Exception) {
                 Log.e("WeatherViewModel", "Error fetching weather data", e)
             }

@@ -1,6 +1,5 @@
 package com.example.rapidrescue.ui.WeatherSafety
 
-// WeatherResponse.kt
 data class WeatherResponse(
     val location: Location,
     val current: CurrentWeather,
@@ -44,4 +43,14 @@ data class Day(
     val avgtemp_c: Double,
     val condition: Condition
 )
+
+data class WeatherData(
+    val date: String,
+    val maxTemp: Double,
+    val minTemp: Double,
+    val condition: String,
+    val iconUrl: String
+)
+
+
 
