@@ -5,7 +5,9 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +26,7 @@ class WeatherSafety : AppCompatActivity() {
     private lateinit var weatherAdapter: WeatherAdapter
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    private lateinit var progressBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -43,7 +46,7 @@ class WeatherSafety : AppCompatActivity() {
         rvForecast.layoutManager = LinearLayoutManager(this)
 
         viewModel.weatherData.observe(this, { weatherData ->
-            findViewById<TextView>(R.id.tvCurrentLocation).text = weatherData.firstOrNull()?.condition ?: "No data"
+            findViewById<TextView>(R.id.tvCurrentLocation).text = weatherData.firstOrNull()?.condition ?: ""
 
             weatherAdapter = WeatherAdapter(weatherData)
             rvForecast.adapter = weatherAdapter
@@ -51,19 +54,31 @@ class WeatherSafety : AppCompatActivity() {
             Log.d("WeatherSafety", "Adapter set with data: $weatherData")
         })
 
-        // Observe current city LiveData
         viewModel.currentCity.observe(this, { currentCity ->
-            findViewById<TextView>(R.id.tvCurrentLocation).text = currentCity
+            if (currentCity == "Loading...") {
+                // Show progress bar
+                progressBar.visibility = View.VISIBLE
+            } else if (currentCity == "Error") {
+                // Show error message or handle error state
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, "Failed to fetch weather data", Toast.LENGTH_SHORT).show()
+            } else {
+                // Data loaded successfully, update UI
+                progressBar.visibility = View.GONE
+                findViewById<TextView>(R.id.tvCurrentLocation).text = currentCity
+            }
         })
 
-        // Initialize FusedLocationProviderClient
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // Fetch the user's current location
+        progressBar = findViewById(R.id.progressBar)
+
         fetchLocation()
     }
 
     private fun fetchLocation() {
+        progressBar.visibility = View.VISIBLE
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Request location permissions

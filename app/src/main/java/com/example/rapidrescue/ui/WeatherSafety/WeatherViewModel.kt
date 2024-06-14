@@ -17,6 +17,10 @@ class WeatherViewModel : ViewModel() {
     fun fetchWeatherForecast(location: String) {
         viewModelScope.launch {
             try {
+                // Show loading state
+                _currentCity.value = "Loading..."
+                _weatherData.value = emptyList()
+
                 val response = weatherApiService.getWeatherForecast(location, "1009c909fda24ec6b0e174401241306", 7)
                 val forecastData = response.forecast.forecastday.map {
                     WeatherData(
@@ -28,9 +32,11 @@ class WeatherViewModel : ViewModel() {
                     )
                 }
                 _weatherData.value = forecastData
-                _currentCity.value = response.location.name // Set the current city
+                _currentCity.value = response.location.name
+
             } catch (e: Exception) {
                 Log.e("WeatherViewModel", "Error fetching weather data", e)
+                _currentCity.value = "Error"
             }
         }
     }

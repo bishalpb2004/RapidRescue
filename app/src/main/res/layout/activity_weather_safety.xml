@@ -7,11 +7,18 @@
     android:orientation="vertical"
     tools:context=".ui.WeatherSafety.WeatherSafety">
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+
     <TextView
         android:id="@+id/tvCurrentLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current Weather"
         android:textSize="30sp"
         android:layout_margin="16dp"
         android:fontFamily="@font/roboto"/>
