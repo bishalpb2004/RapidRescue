@@ -17,6 +17,7 @@
         android:layout_gravity="center">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/firecardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
@@ -67,6 +68,7 @@
 
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/ambulancecardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
@@ -113,6 +115,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/medicalhelpcardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
@@ -159,6 +162,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/policecardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
@@ -205,6 +209,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/nationalhelpcardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
@@ -251,6 +256,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/childhelpcardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
@@ -296,6 +302,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/womenhelpcardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="18dp"
