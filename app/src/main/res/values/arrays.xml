@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="bug_categories">
+        <item>UI Issue</item>
+        <item>Performance Issue</item>
+        <item>Crash</item>
+        <item>Other</item>
+    </string-array>
+</resources>

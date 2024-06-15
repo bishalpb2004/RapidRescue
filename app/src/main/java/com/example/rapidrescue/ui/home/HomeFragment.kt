@@ -3,6 +3,7 @@ package com.example.rapidrescue.ui.home
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -15,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -25,8 +27,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.rapidrescue.R
 import com.example.rapidrescue.databinding.FragmentHomeBinding
 import com.example.rapidrescue.ui.User
+import com.example.rapidrescue.ui.WeatherSafety.WeatherSafety
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
 
@@ -59,6 +66,13 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val weatherSafetyCard: CardView = view.findViewById(R.id.weathercard)
+
+        weatherSafetyCard.setOnClickListener {
+            val intent = Intent(activity, WeatherSafety::class.java)
+            startActivity(intent)
+        }
+
         auth = FirebaseAuth.getInstance()
         navController = Navigation.findNavController(view)
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
@@ -77,7 +91,7 @@ class HomeFragment : Fragment() {
             Toast.makeText(context, "User Not Authenticated", Toast.LENGTH_SHORT).show()
         }
 
-        binding.panicButtonLayout.setOnClickListener {
+        binding.panicButtonCard.setOnClickListener {
             sendMessage()
             Toast.makeText(context,"SMS will be sent shortly",Toast.LENGTH_LONG).show()
         }
@@ -192,25 +206,25 @@ class HomeFragment : Fragment() {
     }
 
     private fun disableClickableElements() {
-        binding.linearLayout5.isClickable = false
-        binding.linearLayout3.isClickable = false
-        binding.knowInstructions.isClickable = false
-        binding.linearLayout5.setOnClickListener(null)
-        binding.linearLayout3.setOnClickListener(null)
-        binding.knowInstructions.setOnClickListener(null)
+        binding.viewEmergencyCard.isClickable = false
+        binding.viewEmergencyCard.isClickable = false
+        binding.instructionsCard.isClickable = false
+        binding.instructionsCard.setOnClickListener(null)
+        binding.viewEmergencyCard.setOnClickListener(null)
+        binding.instructionsCard.setOnClickListener(null)
     }
 
     private fun enableClickableElements() {
-        binding.linearLayout5.isClickable = true
-        binding.linearLayout3.isClickable = true
-        binding.knowInstructions.isClickable = true
-        binding.linearLayout5.setOnClickListener {
+        binding.instructionsCard.isClickable = true
+        binding.viewEmergencyCard.isClickable = true
+        binding.instructionsCard.isClickable = true
+        binding.instructionsCard.setOnClickListener {
             navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
         }
-        binding.linearLayout3.setOnClickListener {
+        binding.viewEmergencyCard.setOnClickListener {
             navController.navigate(R.id.action_navigation_home_to_registeredNumbersFragment)
         }
-        binding.knowInstructions.setOnClickListener {
+        binding.instructionsCard.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_home_to_instructionsFragment)
         }
     }
