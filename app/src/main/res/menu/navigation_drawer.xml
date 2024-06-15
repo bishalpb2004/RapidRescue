@@ -7,18 +7,18 @@
         <item
             android:id="@+id/personal_safety"
             android:title="Personal Safety"
-            android:icon="@drawable/personal_safety"/>
+            android:icon="@drawable/personal_security"/>
 
         <item
             android:id="@+id/panic_button"
             android:title="Emergency contacts"
-            android:icon="@drawable/panic_button"/>
+            android:icon="@drawable/phone_emergency"/>
 
 
         <item
             android:id="@+id/weather_safety"
             android:title="Weather Safety"
-            android:icon="@drawable/weather"/>
+            android:icon="@drawable/weather_safety"/>
 
 
     </group>

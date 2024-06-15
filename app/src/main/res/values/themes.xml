@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.RapidRescue" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#696969</item>
+        <item name="colorPrimary">#00e6c5</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
