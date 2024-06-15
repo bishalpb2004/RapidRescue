@@ -19,6 +19,7 @@ import com.example.rapidrescue.ui.BugReport.bug_report
 import com.example.rapidrescue.ui.EmergencyContacts.EmergencyContacts
 import com.example.rapidrescue.ui.PersonalSafety.PersonalSafety
 import com.example.rapidrescue.ui.WeatherSafety.WeatherSafety
+import com.google.android.libraries.places.api.Places
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        Places.initialize(this, "AIzaSyBuviDdojsTPlG6ghdtRR6OwCFFI6qkZCM")
 
         setUpDrawerLayout()
 

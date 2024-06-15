@@ -66,6 +66,28 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:backgroundTint="#696969"/>
 
+<!--                <Button-->
+<!--                    android:id="@+id/btnPolice"-->
+<!--                    style="?android:attr/buttonBarButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="3dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:backgroundTint="#696969"-->
+<!--                    android:text="Police"-->
+<!--                    android:textColor="@color/white" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/btnHospital"-->
+<!--                    style="?android:attr/buttonBarButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="3dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:backgroundTint="#696969"-->
+<!--                    android:text="Hospital"-->
+<!--                    android:textColor="@color/white" />-->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
