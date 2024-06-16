@@ -10,10 +10,16 @@ interface NewsApi {
     suspend fun getTopHeadlines(
         @Query("country") country: String,
         @Query("apiKey") apiKey: String,
-        @Query("pageSize") pageSize: Int = 100
+        @Query("pageSize") pageSize: Int = 100 // Default to 100 articles per request
+    ): NewsResponse
+
+    @GET("v2/everything")
+    suspend fun searchNews(
+        @Query("q") query: String,
+        @Query("apiKey") apiKey: String,
+        @Query("pageSize") pageSize: Int = 100 // Default to 100 articles per request
     ): NewsResponse
 }
-
 
 object RetrofitInstance {
     val api: NewsApi by lazy {
