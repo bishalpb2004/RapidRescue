@@ -22,4 +22,6 @@
     <color name="add_color">#FFFFFF</color>
     <color name="emergency_numbers_color">#00E6C5</color>
 
+    <color name="adaptiveColor">#FFFFFF</color>
+
 </resources>
