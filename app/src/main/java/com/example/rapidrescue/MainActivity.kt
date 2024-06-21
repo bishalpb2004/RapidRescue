@@ -55,13 +55,15 @@ class MainActivity : AppCompatActivity() {
             drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)  // Enable the back button
 
         bottomNavView.setOnNavigationItemSelectedListener { menuItem ->
             navigateToDestination(menuItem)
             true
         }
     }
-    //For bottom navigation
+
+    // For bottom navigation
     private fun navigateToDestination(menuItem: MenuItem) {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         when (menuItem.itemId) {
@@ -71,44 +73,55 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_chatbot -> navController.navigate(R.id.navigation_chatbot)
         }
     }
-    //For opening and closing drawer layout
+
+    // For opening and closing drawer layout
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
+        if (item.itemId == android.R.id.home) {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                supportFragmentManager.popBackStack() // Navigate back in the fragment stack
+            } else {
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START)
-                    true
                 } else {
-                    drawerLayout.openDrawer(GravityCompat.START) // Open the drawer first
-                    true
+                    drawerLayout.openDrawer(GravityCompat.START)
                 }
             }
-            else -> super.onOptionsItemSelected(item)
+            return true
         }
+        return super.onOptionsItemSelected(item)
     }
 
+
     private fun navigateToFragment(fragment: Fragment) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
+        if (currentFragment != null && currentFragment::class.java == fragment::class.java) {
+            // If the current fragment is the same as the one we want to navigate to, do nothing
+            return
+        }
+
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(
             android.R.anim.slide_in_left, // Enter animation
-            android.R.anim.slide_out_right, // Exit animation
+            android.R.anim.slide_out_right // Exit animation
         )
 
         fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.commit()
         binding.navView.visibility = View.GONE
-
     }
 
 
-    //For opening options in the drawer layout
+
+    // For opening options in the drawer layout
     private fun setUpDrawerLayout() {
         actionBarDrawerToggle = ActionBarDrawerToggle(
             this, binding.drawerLayout,
             R.string.app_name,
             R.string.app_name
         )
+        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+
         binding.navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.personal_safety -> {
@@ -117,8 +130,8 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.closeDrawer(GravityCompat.START)
                 }
                 R.id.panic_button -> {
-                        val intent = Intent(this, EmergencyContacts::class.java)
-                        startActivity(intent)
+                    val intent = Intent(this, EmergencyContacts::class.java)
+                    startActivity(intent)
                 }
                 R.id.developers_page -> {
                     navigateToFragment(developers()) // Replace with your fragment class
@@ -135,8 +148,5 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-
     }
-
-
 }
