@@ -92,8 +92,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.panicButtonCard.setOnClickListener {
-            sendMessage()
-            Toast.makeText(context,"SMS will be sent shortly",Toast.LENGTH_LONG).show()
+            showConfirmationDialog()
         }
 
         val callback = object : OnBackPressedCallback(true) {
@@ -102,6 +101,17 @@ class HomeFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    private fun showConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Send Emergency SMS")
+            .setMessage("Are you sure you want to send emergency messages to all registered numbers?")
+            .setPositiveButton("Yes") { _, _ ->
+                sendMessage()
+            }
+            .setNegativeButton("No", null)
+            .show()
     }
 
     private fun sendMessage() {
