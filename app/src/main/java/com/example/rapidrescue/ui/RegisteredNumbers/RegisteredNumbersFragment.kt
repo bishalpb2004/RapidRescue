@@ -1,6 +1,11 @@
 package com.example.rapidrescue.ui.RegisteredNumbers
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -23,17 +30,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase.*
+import com.google.firebase.database.FirebaseDatabase.getInstance
 import com.google.firebase.database.ValueEventListener
 
 class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickListener,
     AddAdapter.AddAdapterClicksInterface {
 
-    private lateinit var auth:FirebaseAuth
-    private lateinit var databaseReference:DatabaseReference
-    private lateinit var adapter:AddAdapter
+    private lateinit var auth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var adapter: AddAdapter
     private lateinit var popUpFragment: PopUpFragment
-    private lateinit var mList:MutableList<AddDataModel>
+    private lateinit var mList: MutableList<AddDataModel>
     private lateinit var navController: NavController
     private var _binding: FragmentRegisteredNumbersBinding? = null
 
@@ -43,6 +50,10 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
 
     private val sharedViewModel: SharedViewModel by lazy {
         ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+    }
+
+    companion object {
+        private const val REQUEST_CALL_PERMISSION = 1
     }
 
     override fun onCreateView(
@@ -74,12 +85,11 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
         init(view)
         getDataFromFirebase()
         registerEvents()
-
     }
 
     private fun registerEvents() {
         binding.addBtnRegister.setOnClickListener {
-            popUpFragment= PopUpFragment()
+            popUpFragment = PopUpFragment()
             popUpFragment.setListener(this)
             popUpFragment.show(
                 childFragmentManager,
@@ -136,7 +146,6 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
                                 })
                         }
 
-
                         override fun onEditNumberBtnClicked(addNumberData: AddDataModel) {
                             // Your edit logic here
                         }
@@ -165,6 +174,10 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
                                 })
                         }
 
+                        override fun onCallIconClicked(phoneNumber: String) {
+                            showCallConfirmationDialog(phoneNumber)
+                        }
+
                     })
                     requireActivity().runOnUiThread {
                         adapter.notifyDataSetChanged()
@@ -178,20 +191,52 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
         })
     }
 
+    private fun showCallConfirmationDialog(phoneNumber: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Do you want to call this number?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { dialog, id ->
+                makePhoneCall(phoneNumber)
+            }
+            .setNegativeButton("No") { dialog, id ->
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+    }
 
+    private fun makePhoneCall(phoneNumber: String) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL_PERMISSION)
+        } else {
+            val dialIntent = Intent(Intent.ACTION_CALL)
+            dialIntent.data = Uri.parse("tel:$phoneNumber")
+            startActivity(dialIntent)
+        }
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CALL_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(context, "Permission GRANTED", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Permission DENIED", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     private fun init(view: View) {
-        navController=Navigation.findNavController(view)
-        auth=FirebaseAuth.getInstance()
-        databaseReference= getInstance().reference.child("Name & Number")
+        navController = Navigation.findNavController(view)
+        auth = FirebaseAuth.getInstance()
+        databaseReference = getInstance().reference.child("Name & Number")
             .child(auth.currentUser?.uid.toString())
         binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.layoutManager=LinearLayoutManager(context)
-        mList= mutableListOf()
-        adapter=AddAdapter(mList)
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        mList = mutableListOf()
+        adapter = AddAdapter(mList)
         adapter.setListener(this)
-        binding.recyclerView.adapter=adapter
+        binding.recyclerView.adapter = adapter
     }
 
     override fun onSaveTask(name: String, phoneNumber: String, phoneNumberEt: EditText) {
@@ -206,7 +251,6 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
                 popUpFragment.dismiss()
             }
     }
-
 
     override fun onDeleteNumberBtnClicked(addNumberData: AddDataModel) {
 //        databaseReference.child(addNumberData.name).removeValue().addOnCompleteListener {
@@ -230,4 +274,7 @@ class RegisteredNumbersFragment : Fragment(), PopUpFragment.DialogNextBtnClickLi
 //        navController.navigate(R.id.action_registeredNumbersFragment_to_SOSMessageFragment)
     }
 
+    override fun onCallIconClicked(phoneNumber: String) {
+
+    }
 }

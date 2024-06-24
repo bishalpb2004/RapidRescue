@@ -7,18 +7,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rapidrescue.databinding.EachItemBinding
 
 
-class AddAdapter(private val list:MutableList<AddDataModel>)
-    :RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
+class AddAdapter(private val list: MutableList<AddDataModel>)
+    : RecyclerView.Adapter<AddAdapter.AddViewHolder>() {
 
-    private var listener:AddAdapterClicksInterface?=null
-    fun setListener(listener:AddAdapterClicksInterface){
-        this.listener=listener
+    private var listener: AddAdapterClicksInterface? = null
+
+    fun setListener(listener: AddAdapterClicksInterface) {
+        this.listener = listener
     }
-    inner class AddViewHolder(itemView: View, val binding:EachItemBinding,clickListener: AddAdapterClicksInterface) :RecyclerView.ViewHolder(binding.root){
+
+    inner class AddViewHolder(itemView: View, val binding: EachItemBinding, clickListener: AddAdapterClicksInterface)
+        : RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
                 clickListener.onItemClick(adapterPosition)
+            }
+            binding.callicon.setOnClickListener {
+                clickListener.onCallIconClicked(list[adapterPosition].phoneNumber)
             }
         }
     }
@@ -28,20 +34,14 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
         return AddViewHolder(binding.root, binding, listener!!)
     }
 
-
-
-    override fun onBindViewHolder(holder: AddAdapter.AddViewHolder, position: Int) {
-        with(holder){
-            with(list[position]){
-                binding.registeredName.text=this.name
-                binding.registeredNumber.text=this.phoneNumber
+    override fun onBindViewHolder(holder: AddViewHolder, position: Int) {
+        with(holder) {
+            with(list[position]) {
+                binding.registeredName.text = this.name
+                binding.registeredNumber.text = this.phoneNumber
                 binding.deleteNumber.setOnClickListener {
                     listener?.onDeleteNumberBtnClicked(this)
                 }
-
-//                binding.editNumber.setOnClickListener {
-//                    listener?.onEditNumberBtnClicked(this)
-//                }
             }
         }
     }
@@ -50,10 +50,10 @@ class AddAdapter(private val list:MutableList<AddDataModel>)
         return list.size
     }
 
-    interface AddAdapterClicksInterface{
+    interface AddAdapterClicksInterface {
         fun onDeleteNumberBtnClicked(addNumberData: AddDataModel)
         fun onEditNumberBtnClicked(addNumberData: AddDataModel)
-        fun onItemClick(position:Int)
+        fun onItemClick(position: Int)
+        fun onCallIconClicked(phoneNumber: String) // Add this method
     }
-
 }
