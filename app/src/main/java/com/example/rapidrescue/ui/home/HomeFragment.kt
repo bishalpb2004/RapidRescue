@@ -42,6 +42,8 @@ class HomeFragment : Fragment() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private lateinit var locationManager: LocationManager
+    private var lastBackPressedTime: Long = 0
+    private val backPressThreshold: Long = 2000
 
     private val binding get() = _binding!!
 
@@ -71,6 +73,8 @@ class HomeFragment : Fragment() {
         weatherSafetyCard.setOnClickListener {
             val intent = Intent(activity, WeatherSafety::class.java)
             startActivity(intent)
+
+
         }
 
         auth = FirebaseAuth.getInstance()
@@ -178,14 +182,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun showExitDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Exit")
-            .setMessage("Are you sure you want to exit?")
-            .setPositiveButton("Yes") { _, _ ->
-                requireActivity().finishAffinity()
-            }
-            .setNegativeButton("No", null)
-            .show()
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastBackPressedTime < backPressThreshold) {
+            requireActivity().finishAffinity()
+        } else {
+            lastBackPressedTime = currentTime
+            Toast.makeText(context, "Press again to exit", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun readUserData(userId: String) {

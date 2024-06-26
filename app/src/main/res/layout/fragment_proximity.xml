@@ -10,8 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:drawingCacheQuality="auto"
-        android:layout_marginBottom="100dp"
+        android:drawingCacheQuality="high"
         android:orientation="vertical">
 
         <fragment
@@ -26,87 +25,5 @@
 
 
     <!-- RecyclerView for food items -->
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nested_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        android:backgroundTint="@color/white"
-        android:background="@drawable/edit_background">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp">
-
-                <Button
-                    android:id="@+id/btnPolice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Police"
-                    android:textColor="@color/white"
-                    android:layout_margin="3dp"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:backgroundTint="#696969"/>
-
-                <Button
-                    android:id="@+id/btnHospital"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Hospital"
-                    android:textColor="@color/white"
-                    android:layout_margin="3dp"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:backgroundTint="#696969"/>
-
-<!--                <Button-->
-<!--                    android:id="@+id/btnPolice"-->
-<!--                    style="?android:attr/buttonBarButtonStyle"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="3dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:backgroundTint="#696969"-->
-<!--                    android:text="Police"-->
-<!--                    android:textColor="@color/white" />-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/btnHospital"-->
-<!--                    style="?android:attr/buttonBarButtonStyle"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_margin="3dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:backgroundTint="#696969"-->
-<!--                    android:text="Hospital"-->
-<!--                    android:textColor="@color/white" />-->
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:src="@drawable/dash"
-                android:layout_gravity="center|top"/>
-
-
-        </FrameLayout>
-
-
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

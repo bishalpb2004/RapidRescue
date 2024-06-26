@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:queryHint="Search News"
-        android:background="@drawable/edit_background"/>
+        android:background="@drawable/edit_background"
+        android:iconifiedByDefault="false"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
