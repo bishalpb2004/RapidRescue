@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.rapidrescue.ui.proximity
 
 import android.Manifest
@@ -94,6 +96,7 @@ class proximity : Fragment() {
         currentMarker = mGoogleMap.addMarker(markerOptions)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
