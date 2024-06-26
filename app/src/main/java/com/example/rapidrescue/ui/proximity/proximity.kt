@@ -27,6 +27,8 @@ class proximity : Fragment() {
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private var currentMarker: Marker? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
