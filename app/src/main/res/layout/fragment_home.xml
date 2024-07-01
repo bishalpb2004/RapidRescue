@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120sp"
                 android:layout_margin="10dp"
-                android:backgroundTint="#696969"
+                android:backgroundTint="@color/_bg__frame_1_ek1_color"
                 android:orientation="horizontal"
                 app:shapeAppearanceOverlay="@style/roundimageview">
 
@@ -80,7 +80,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    android:backgroundTint="#696969"
+                    android:backgroundTint="@color/_bg__frame_1_ek1_color"
                     app:shapeAppearanceOverlay="@style/roundimageview">
 
                     <LinearLayout
@@ -119,7 +119,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    android:backgroundTint="#696969"
+                    android:backgroundTint="@color/_bg__frame_1_ek1_color"
                     app:shapeAppearanceOverlay="@style/roundimageview">
 
                     <LinearLayout
@@ -158,7 +158,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    android:backgroundTint="#696969"
+                    android:backgroundTint="@color/_bg__frame_1_ek1_color"
                     app:shapeAppearanceOverlay="@style/roundimageview">
 
                     <LinearLayout
@@ -197,7 +197,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    android:backgroundTint="#696969"
+                    android:backgroundTint="@color/_bg__frame_1_ek1_color"
                     app:shapeAppearanceOverlay="@style/roundimageview">
 
                     <LinearLayout
@@ -236,7 +236,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    android:backgroundTint="#696969"
+                    android:backgroundTint="@color/_bg__frame_1_ek1_color"
                     app:shapeAppearanceOverlay="@style/roundimageview">
 
                     <LinearLayout
@@ -275,7 +275,7 @@
                     android:layout_rowWeight="1"
                     android:layout_columnWeight="1"
                     android:layout_margin="5dp"
-                    android:backgroundTint="#696969"
+                    android:backgroundTint="@color/_bg__frame_1_ek1_color"
                     app:shapeAppearanceOverlay="@style/roundimageview">
 
                     <LinearLayout

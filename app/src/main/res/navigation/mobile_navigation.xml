@@ -136,7 +136,7 @@
 
     <fragment
         android:id="@+id/navigation_chatbot"
-        android:name="com.example.rapidrescue.ui.proximity.proximity"
+        android:name="com.example.rapidrescue.ui.proximity.Proximity"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_proximity"/>
     <fragment

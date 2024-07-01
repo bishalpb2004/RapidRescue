@@ -69,6 +69,7 @@ dependencies {
     //Google maps
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.android.libraries.places:places:3.5.0")
 
 
     //Animation gif
@@ -90,5 +91,10 @@ dependencies {
 
     //Picasso
     implementation("com.squareup.picasso:picasso:2.71828")
+
+    //osm map
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
+    implementation("org.osmdroid:osmdroid-mapsforge:6.1.18")
+    implementation("com.github.MKergall:osmbonuspack:6.9.0")
 
 }

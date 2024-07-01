@@ -44,7 +44,7 @@
     </FrameLayout>
 
     <com.google.android.material.card.MaterialCardView
-        android:backgroundTint="#696969"
+        android:backgroundTint="@color/_bg__frame_1_ek1_color"
         app:shapeAppearanceOverlay="@style/roundimageview"
         android:orientation="horizontal"
         android:background="#000000"
