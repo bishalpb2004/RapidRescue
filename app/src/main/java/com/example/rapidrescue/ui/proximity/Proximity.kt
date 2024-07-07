@@ -14,17 +14,23 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.rapidrescue.R
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import org.json.JSONArray
+import org.osmdroid.bonuspack.routing.OSRMRoadManager
+import org.osmdroid.bonuspack.routing.Road
+import org.osmdroid.bonuspack.routing.RoadManager
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-import org.osmdroid.bonuspack.routing.RoadManager
-import org.osmdroid.bonuspack.routing.OSRMRoadManager
-import org.osmdroid.bonuspack.routing.Road
-import android.graphics.Color
+import java.io.IOException
+import kotlin.concurrent.thread
 
 class Proximity : Fragment() {
 
@@ -54,8 +60,8 @@ class Proximity : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestLocationPermission()
-        view.findViewById<Button>(R.id.btnPolice).setOnClickListener { showShortestPath("police") }
-        view.findViewById<Button>(R.id.btnHospital).setOnClickListener { showShortestPath("hospital") }
+        view.findViewById<Button>(R.id.btnPolice).setOnClickListener { showNearbyPlaces("police") }
+        view.findViewById<Button>(R.id.btnHospital).setOnClickListener { showNearbyPlaces("hospital") }
     }
 
     private fun requestLocationPermission() {
@@ -68,11 +74,9 @@ class Proximity : Fragment() {
 
     private fun enableMyLocation() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            progressBar.visibility = View.VISIBLE
             myLocationOverlay.enableMyLocation()
             myLocationOverlay.runOnFirstFix {
                 activity?.runOnUiThread {
-                    progressBar.visibility = View.GONE
                     val myLocation = myLocationOverlay.myLocation
                     if (myLocation != null) {
                         mapView.controller.setZoom(15.0)
@@ -80,12 +84,13 @@ class Proximity : Fragment() {
                     } else {
                         mapView.controller.setZoom(DEFAULT_ZOOM_LEVEL)
                     }
+                    progressBar.visibility = View.GONE
                 }
             }
         }
     }
 
-    private fun showShortestPath(placeType: String) {
+    private fun showNearbyPlaces(placeType: String) {
         try {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 val location = myLocationOverlay.myLocation
@@ -93,57 +98,88 @@ class Proximity : Fragment() {
                     Log.d("Proximity", "Current location is not available.")
                     return
                 }
+                progressBar.visibility = View.VISIBLE
                 val start = GeoPoint(location.latitude, location.longitude)
-                val end = findNearestPlace(start, placeType)
-                if (end == null) {
-                    Log.d("Proximity", "No $placeType found nearby.")
-                    return
-                }
 
-                val roadManager = OSRMRoadManager(requireContext(), USER_AGENT)
-                val waypoints = arrayListOf(start, end)
-                Thread {
-                    val road = roadManager.getRoad(waypoints)
-                    if (road.mStatus != Road.STATUS_OK) {
-                        Log.e("Proximity", "Error calculating the road: ${road.mStatus}")
-                    }
+                thread {
+                    val nearbyPlaces = findNearbyPlaces(start, placeType)
                     activity?.runOnUiThread {
+                        progressBar.visibility = View.GONE
                         mapView.overlays.removeAll { it !is MyLocationNewOverlay }
-                        val roadOverlay = RoadManager.buildRoadOverlay(road)
-                        roadOverlay.color = Color.RED // Set the route color to red
-                        mapView.overlays.add(roadOverlay)
-                        mapView.overlays.add(createMarker(start, "Your location", R.drawable.location_start))
-                        mapView.overlays.add(createMarker(end, placeType.capitalize(), R.drawable.location_end))
-                        mapView.invalidate()
-                        mapView.controller.setCenter(start)
-                        mapView.controller.setZoom(15.0) // Zoom in a bit more after clicking
+                        if (nearbyPlaces.isNotEmpty()) {
+                            for (place in nearbyPlaces) {
+                                val marker = createMarker(place, placeType.replaceFirstChar { it.uppercase() }, R.drawable.location_end)
+                                marker.setOnMarkerClickListener { marker, _ ->
+                                    showRouteToMarker(start, marker.position)
+                                    true
+                                }
+                                mapView.overlays.add(marker)
+                            }
+                            mapView.invalidate()
+                            mapView.controller.setCenter(start)
+                            mapView.controller.setZoom(15.0) // Zoom in a bit more after clicking
+                        } else {
+                            Log.d("Proximity", "No $placeType found nearby.")
+                        }
                     }
-                }.start()
+                }
             }
         } catch (e: Exception) {
-            Log.e("Proximity", "Error showing shortest path: ${e.message}", e)
+            Log.e("Proximity", "Error showing nearby places: ${e.message}", e)
         }
     }
 
-    private fun findNearestPlace(currentLocation: GeoPoint, placeType: String): GeoPoint? {
-        // Implement your logic to find the nearest place of the specified type
-        // This is a placeholder method, replace with your actual implementation
-        // Example implementation:
-        if (placeType == "police") {
-            // Find nearest police station coordinates
-            return GeoPoint(currentLocation.latitude + 0.01, currentLocation.longitude + 0.01) // Example coordinates
-        } else if (placeType == "hospital") {
-            // Find nearest hospital coordinates
-            return GeoPoint(currentLocation.latitude + 0.02, currentLocation.longitude + 0.02) // Example coordinates
+    private fun findNearbyPlaces(currentLocation: GeoPoint, placeType: String): List<GeoPoint> {
+        val urlString = "https://nominatim.openstreetmap.org/search?format=json&q=$placeType&viewbox=${currentLocation.longitude-0.1},${currentLocation.latitude+0.1},${currentLocation.longitude+0.1},${currentLocation.latitude-0.1}&bounded=1"
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url(urlString)
+            .build()
+        val response: Response
+
+        val places = mutableListOf<GeoPoint>()
+        try {
+            response = client.newCall(request).execute()
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+            val jsonResponse = response.body!!.string()
+            val jsonArray = JSONArray(jsonResponse)
+            for (i in 0 until jsonArray.length()) {
+                val place = jsonArray.getJSONObject(i)
+                val lat = place.getDouble("lat")
+                val lon = place.getDouble("lon")
+                places.add(GeoPoint(lat, lon))
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
-        return null
+
+        return places
     }
+
     private fun createMarker(geoPoint: GeoPoint, title: String, iconResource: Int): Marker {
         return Marker(mapView).apply {
             position = geoPoint
             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             this.title = title
             icon = ContextCompat.getDrawable(requireContext(), iconResource)
+        }
+    }
+
+    private fun showRouteToMarker(start: GeoPoint, end: GeoPoint) {
+        val roadManager = OSRMRoadManager(requireContext(), USER_AGENT)
+        val waypoints = arrayListOf(start, end)
+        thread {
+            val road = roadManager.getRoad(waypoints)
+            if (road.mStatus != Road.STATUS_OK) {
+                Log.e("Proximity", "Error calculating the road: ${road.mStatus}")
+            }
+            activity?.runOnUiThread {
+                mapView.overlays.removeAll { it is Polyline }
+                val roadOverlay = RoadManager.buildRoadOverlay(road)
+                mapView.overlays.add(roadOverlay)
+                mapView.invalidate()
+            }
         }
     }
 
