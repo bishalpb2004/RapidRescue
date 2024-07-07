@@ -60,7 +60,7 @@ class Proximity : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestLocationPermission()
-        view.findViewById<Button>(R.id.btnPolice).setOnClickListener { showNearbyPlaces("police") }
+        view.findViewById<Button>(R.id.btnClinic).setOnClickListener { showNearbyPlaces("clinic") }
         view.findViewById<Button>(R.id.btnHospital).setOnClickListener { showNearbyPlaces("hospital") }
     }
 
@@ -169,12 +169,19 @@ class Proximity : Fragment() {
     private fun showRouteToMarker(start: GeoPoint, end: GeoPoint) {
         val roadManager = OSRMRoadManager(requireContext(), USER_AGENT)
         val waypoints = arrayListOf(start, end)
+
+        // Show loading indicator
+        progressBar.visibility = View.VISIBLE
+
         thread {
             val road = roadManager.getRoad(waypoints)
             if (road.mStatus != Road.STATUS_OK) {
                 Log.e("Proximity", "Error calculating the road: ${road.mStatus}")
             }
             activity?.runOnUiThread {
+                // Hide loading indicator
+                progressBar.visibility = View.GONE
+
                 mapView.overlays.removeAll { it is Polyline }
                 val roadOverlay = RoadManager.buildRoadOverlay(road)
                 mapView.overlays.add(roadOverlay)

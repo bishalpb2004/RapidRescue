@@ -21,7 +21,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         android:backgroundTint="@color/white"
         android:background="@drawable/edit_background">
@@ -37,11 +37,11 @@
                 android:layout_marginTop="20dp">
 
                 <Button
-                    android:id="@+id/btnPolice"
+                    android:id="@+id/btnClinic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Police"
+                    android:text="Clinics"
                     android:textColor="@color/white"
                     android:layout_margin="3dp"
                     style="?android:attr/buttonBarButtonStyle"
