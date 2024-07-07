@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ProgressBar
 import android.widget.SearchView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
@@ -16,12 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rapidrescue.R
+import com.facebook.shimmer.ShimmerFrameLayout
 
 class NewsFragment : Fragment(), OnItemClickListener {
 
     private lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
-    private lateinit var progressBar: ProgressBar
+    private lateinit var shimmerLayout: ShimmerFrameLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var webView: WebView
     private lateinit var searchView: SearchView
@@ -36,7 +36,7 @@ class NewsFragment : Fragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = view.findViewById(R.id.recyclerView)
-        progressBar = view.findViewById(R.id.progressBar)
+        shimmerLayout = view.findViewById(R.id.shimmer_view_container)
         webView = view.findViewById(R.id.webView)
         searchView = view.findViewById(R.id.searchView)
         viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
@@ -49,6 +49,9 @@ class NewsFragment : Fragment(), OnItemClickListener {
                 newsAdapter = NewsAdapter(news, this)
                 recyclerView.adapter = newsAdapter
                 recyclerView.layoutManager = LinearLayoutManager(context)
+                shimmerLayout.stopShimmer()
+                shimmerLayout.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
             } else {
                 Log.e("NewsFragment", "News data is null")
             }
@@ -56,10 +59,12 @@ class NewsFragment : Fragment(), OnItemClickListener {
 
         viewModel.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
             if (isLoading) {
-                progressBar.visibility = View.VISIBLE
+                shimmerLayout.startShimmer()
+                shimmerLayout.visibility = View.VISIBLE
                 recyclerView.visibility = View.GONE
             } else {
-                progressBar.visibility = View.GONE
+                shimmerLayout.stopShimmer()
+                shimmerLayout.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
             }
         })
@@ -108,8 +113,3 @@ class NewsFragment : Fragment(), OnItemClickListener {
         }
     }
 }
-
-
-
-
-
