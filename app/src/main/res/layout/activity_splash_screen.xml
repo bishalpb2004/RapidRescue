@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/adaptiveColor"
     android:layout_height="match_parent"
     tools:context=".splash_screen">
 
@@ -12,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/adaptiveColor">
 
         <ImageView
             android:layout_width="120dp"

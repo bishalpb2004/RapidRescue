@@ -5,7 +5,7 @@
     android:id="@+id/asking"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#696969"
+    android:background="@color/adaptiveColor"
     tools:context=".MainActivity">
 
     <TextView
@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textColor="#F4F0F0"
         android:text="@string/dev"
         android:textStyle="bold"
         android:textSize="30sp"
