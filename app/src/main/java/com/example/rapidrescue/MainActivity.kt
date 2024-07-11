@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.rapidrescue.databinding.ActivityMainBinding
@@ -29,17 +30,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Places.initialize(this, "AIzaSyBuviDdojsTPlG6ghdtRR6OwCFFI6qkZCM")
-
-        setUpDrawerLayout()
+        Places.initialize(this, "google_maps_key")
 
         auth = FirebaseAuth.getInstance()
         drawerLayout = binding.drawerLayout
+
+        setupDrawerLayout() // Setup drawer layout
 
         // Setup bottom navigation
         val bottomNavView: BottomNavigationView = binding.navView
@@ -47,14 +49,23 @@ class MainActivity : AppCompatActivity() {
         bottomNavView.setupWithNavController(navController)
 
         // Configure action bar with navigation controller and drawer layout
-        val appBarConfiguration = AppBarConfiguration(
+        appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.navigation_dashboard,
                 R.id.navigation_notifications, R.id.navigation_chatbot
-            ),
-            drawerLayout
+            ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // Set up ActionBarDrawerToggle
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this, drawerLayout,
+            R.string.app_name,
+            R.string.app_name
+        )
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)  // Enable the back button
 
         bottomNavView.setOnNavigationItemSelectedListener { menuItem ->
@@ -74,23 +85,65 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // For opening and closing drawer layout
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            if (supportFragmentManager.backStackEntryCount > 0) {
-                supportFragmentManager.popBackStack() // Navigate back in the fragment stack
-            } else {
-                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                } else {
-                    drawerLayout.openDrawer(GravityCompat.START)
-                }
-            }
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    override fun onBackPressed() {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        if (navController.currentDestination?.id == R.id.navigation_home) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START)
+            } else {
+                super.onBackPressed()
+            }
+        } else {
+            navController.navigateUp()
+        }
+    }
+
+    // Setup Drawer Layout
+    private fun setupDrawerLayout() {
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this, drawerLayout,
+            R.string.app_name,
+            R.string.app_name
+        )
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+
+        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
+            handleDrawerNavigation(menuItem)
+            true
+        }
+    }
+
+    // Handle Drawer Navigation
+    private fun handleDrawerNavigation(menuItem: MenuItem) {
+        when (menuItem.itemId) {
+            R.id.personal_safety -> {
+                val intent = Intent(this, PersonalSafety::class.java)
+                startActivity(intent)
+            }
+            R.id.panic_button -> {
+                val intent = Intent(this, EmergencyContacts::class.java)
+                startActivity(intent)
+            }
+            R.id.developers_page -> {
+                navigateToFragment(developers()) // Replace with your fragment class
+            }
+            R.id.weather_safety -> {
+                val intent = Intent(this, WeatherSafety::class.java)
+                startActivity(intent)
+            }
+            R.id.bug_report -> {
+                val intent = Intent(this, bug_report::class.java)
+                startActivity(intent)
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+    }
 
     private fun navigateToFragment(fragment: Fragment) {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
@@ -108,45 +161,5 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.container, fragment)
         fragmentTransaction.commit()
         binding.navView.visibility = View.GONE
-    }
-
-
-
-    // For opening options in the drawer layout
-    private fun setUpDrawerLayout() {
-        actionBarDrawerToggle = ActionBarDrawerToggle(
-            this, binding.drawerLayout,
-            R.string.app_name,
-            R.string.app_name
-        )
-        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
-
-        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.personal_safety -> {
-                    val intent = Intent(this, PersonalSafety::class.java)
-                    startActivity(intent)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                }
-                R.id.panic_button -> {
-                    val intent = Intent(this, EmergencyContacts::class.java)
-                    startActivity(intent)
-                }
-                R.id.developers_page -> {
-                    navigateToFragment(developers()) // Replace with your fragment class
-                }
-                R.id.weather_safety -> {
-                    val intent = Intent(this, WeatherSafety::class.java)
-                    startActivity(intent)
-                }
-                R.id.bug_report -> {
-                    val intent = Intent(this, bug_report::class.java)
-                    startActivity(intent)
-                }
-            }
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-            true
-        }
     }
 }
