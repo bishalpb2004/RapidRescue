@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.rapidrescue.Authentication.SignInActivity
 
 class splash_screen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +31,7 @@ class splash_screen : AppCompatActivity() {
 
         // Navigate to the main activity after a delay
         Handler().postDelayed({
-            val intent = Intent(this@splash_screen, PhoneActivity::class.java)
+            val intent = Intent(this@splash_screen, SignInActivity::class.java)
             startActivity(intent)
             finish()
         }, 1000)

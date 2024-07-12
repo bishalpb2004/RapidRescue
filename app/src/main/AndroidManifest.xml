@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32"
         tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
     <uses-feature
@@ -29,13 +31,16 @@
         android:roundIcon="@drawable/our_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.RapidRescue"
-        tools:targetApi="tiramisu">
+        tools:targetApi="tiramisu" >
+        <activity
+            android:name=".Authentication.SignInActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.BugReport.bug_report"
             android:exported="false" />
         <activity
             android:name=".splash_screen"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,11 +64,11 @@
             android:name=".ProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".OTPActivity"
+            android:name=".Authentication.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".PhoneActivity"
-            android:exported="true"/>
+            android:name=".Authentication.SignUpActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
