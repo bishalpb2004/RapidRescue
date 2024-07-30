@@ -77,9 +77,10 @@ class bug_report : AppCompatActivity() {
     private fun sendBugReport() {
         val description = bugDescription.text.toString()
         val category = bugCategorySpinner.selectedItem.toString()
+        val emailAddresses = arrayOf("parthivkumardas@gmail.com", "turinteron@gmail.com", "bishalp.biswas@gmail.com")
         val emailIntent = Intent(Intent.ACTION_SEND_MULTIPLE).apply {
             type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf("support@example.com"))
+            putExtra(Intent.EXTRA_EMAIL, emailAddresses)
             putExtra(Intent.EXTRA_SUBJECT, "Bug Report")
             putExtra(Intent.EXTRA_TEXT, "Category: $category\n\nDescription: $description")
 
@@ -90,9 +91,15 @@ class bug_report : AppCompatActivity() {
                 putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
+
+            setPackage("com.google.android.gm") // Set Gmail as the email client
         }
 
-        startActivity(Intent.createChooser(emailIntent, "Send Bug Report"))
+        try {
+            startActivity(emailIntent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Gmail app is not installed", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
