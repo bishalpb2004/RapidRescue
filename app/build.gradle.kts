@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -106,6 +107,11 @@ dependencies {
 
     //Shimmer effect
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+
+    //Firebase AppCheck
+    implementation("com.google.firebase:firebase-bom:33.1.2")
+    implementation("com.google.firebase:firebase-appcheck-playintegrity:18.0.0")
+    implementation("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
 
 
 }
