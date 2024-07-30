@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:text="RapidRescue"
             android:layout_gravity="left"
             android:textAppearance="@drawable/edit_background"
@@ -27,7 +27,7 @@
         android:id="@+id/app_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
         android:text="App Version 1.0"
         android:layout_gravity="left"
         android:textAppearance="@drawable/edit_background"
