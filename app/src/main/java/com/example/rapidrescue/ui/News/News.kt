@@ -7,7 +7,7 @@ data class News(
     val url: String
 )
 
-data class NewsResponse(
-    val articles: List<News>
-)
+//data class NewsResponse(
+//    val articles: List<News>
+//)
 
