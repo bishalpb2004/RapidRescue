@@ -6,10 +6,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.rapidrescue.MainActivity
 import com.example.rapidrescue.R
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 
 class SignInActivity : AppCompatActivity() {
+    private lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,7 +23,11 @@ class SignInActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        mAuth=FirebaseAuth.getInstance()
+        if (mAuth.currentUser!=null){
+            startActivity(Intent(this,MainActivity::class.java))
+            //finish()
+        }
         val btnLogin: MaterialCardView = findViewById(R.id.btnLogin)
         val btnSignUp: MaterialCardView = findViewById(R.id.btnSignUp)
 
