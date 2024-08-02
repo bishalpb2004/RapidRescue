@@ -2,76 +2,84 @@ package com.example.rapidrescue.Authentication
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rapidrescue.MainActivity
-import com.example.rapidrescue.databinding.ActivityLogInBinding
+import com.example.rapidrescue.R
+import com.example.rapidrescue.ui.home.HomeFragment
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLogInBinding
-    private lateinit var auth: FirebaseAuth
-
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var dbRef:DatabaseReference
+    private lateinit var etEmail:TextInputEditText
+    private lateinit var etPass:TextInputEditText
+    private lateinit var btnLogin:Button
+    private lateinit var tvLogin:TextView
+    private lateinit var tvForgotPass:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLogInBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_log_in)
 
-        auth = FirebaseAuth.getInstance()
-
-        binding.btnLogin.setOnClickListener {
-            val email = binding.etEmailLoginPage.text.toString().trim()
-            val password = binding.etPassLoginPage.text.toString().trim()
-
-            if (validateInput(email, password)) {
-                loginUser(email, password)
-            }
-        }
-
-        binding.tvLoginPage.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.tvForgotPass.setOnClickListener {
-            // Implement forgot password functionality
-            Toast.makeText(this, "Forgot Password clicked", Toast.LENGTH_SHORT).show()
-        }
+        initi()
+        registerEvents()
     }
 
-    private fun validateInput(email: String, password: String): Boolean {
-        return when {
-            TextUtils.isEmpty(email) -> {
-                binding.etEmailLoginPage.error = "Email is required"
-                false
-            }
-            TextUtils.isEmpty(password) -> {
-                binding.etPassLoginPage.error = "Password is required"
-                false
-            }
-            else -> true
-        }
+    private fun initi() {
+        mAuth=FirebaseAuth.getInstance()
+        dbRef=FirebaseDatabase.getInstance()
+            .reference.child("Users")
+            .child(mAuth.currentUser?.uid.toString())
+        etEmail=findViewById(R.id.etEmailLoginPage)
+        etPass=findViewById(R.id.etPassLoginPage)
+        btnLogin=findViewById(R.id.btnLogin1)
+        tvLogin=findViewById(R.id.tvLoginPage)
+        tvForgotPass=findViewById(R.id.tvForgotPass)
     }
 
-    private fun loginUser(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    if (user != null && user.isEmailVerified) {
-                        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                        // Navigate to main activity or home screen
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(this, "Please verify your email address", Toast.LENGTH_SHORT).show()
+    private fun registerEvents() {
+        tvLogin.setOnClickListener {
+            startActivity(Intent(this,SignUpActivity::class.java))
+            finish()
+        }
+        tvForgotPass.setOnClickListener {
+            startActivity(Intent(this,ResetPasswordActivity::class.java))
+        }
+        btnLogin.setOnClickListener {
+            val email=etEmail.text.toString().trim()
+            val pass=etPass.text.toString().trim()
+
+            if (email.isNotEmpty() && pass.isNotEmpty()){
+                mAuth.signInWithEmailAndPassword(email,pass)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful){
+                            val verification=mAuth.currentUser?.isEmailVerified
+                            when(verification){
+                                true->{
+                                    Toast.makeText(this,"Login Successfully",Toast.LENGTH_LONG).show()
+                                    startActivity(Intent(this, MainActivity::class.java))
+                                    //finish() // Finish LoginActivity to prevent going back to it
+                                }
+                                else-> Toast.makeText(this,"Please check your Gmail and Verify your smail id",Toast.LENGTH_LONG).show()
+                            }
+                        }
+                        else{
+                            Toast.makeText(this,
+                                "Kindly Sign Up by clicking SignUp Button",
+                                Toast.LENGTH_LONG)
+                                .show()
+                        }
                     }
-                } else {
-                    Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                }
+            }else{
+                Toast.makeText(this,"Please fill up all the necessary details",Toast.LENGTH_LONG).show()
             }
+        }
     }
 }

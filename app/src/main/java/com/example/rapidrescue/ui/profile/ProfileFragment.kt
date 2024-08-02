@@ -9,10 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.rapidrescue.R
-import com.example.rapidrescue.databinding.FragmentFetchUserDataBinding
+import com.example.rapidrescue.Authentication.User
 import com.example.rapidrescue.databinding.FragmentProfileBinding
-import com.example.rapidrescue.ui.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -71,8 +69,8 @@ class ProfileFragment : Fragment() {
                         binding.loadingOverlay.visibility=View.GONE
                         user?.let {
                             binding.tvName.text = "Name : ${it.name}"
-                            binding.tvSchId.text = "Scholar ID : ${it.schNumber}"
-                            binding.tvPhone.text = "Phone Number : ${it.phoneNumber}"
+                            binding.tvSchId.text = "Email : ${it.email}"
+                            binding.tvPhone.text = "Phone Number : ${it.phNumber}"
                         }
                     } else {
                         Toast.makeText(context, "User data not found", Toast.LENGTH_LONG).show()

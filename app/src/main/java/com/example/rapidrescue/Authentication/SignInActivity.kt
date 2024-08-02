@@ -10,11 +10,10 @@ import com.example.rapidrescue.MainActivity
 import com.example.rapidrescue.R
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 
 class SignInActivity : AppCompatActivity() {
-
-    private lateinit var auth: FirebaseAuth
-
+    private lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,15 +23,11 @@ class SignInActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        auth = FirebaseAuth.getInstance()
-
-        // Check if user is already authenticated
-        val currentUser = auth.currentUser
-        if (currentUser != null && currentUser.isEmailVerified) {
-            navigateToMainActivity()
+        mAuth=FirebaseAuth.getInstance()
+        if (mAuth.currentUser!=null){
+            startActivity(Intent(this,MainActivity::class.java))
+            //finish()
         }
-
         val btnLogin: MaterialCardView = findViewById(R.id.btnLogin)
         val btnSignUp: MaterialCardView = findViewById(R.id.btnSignUp)
 
@@ -46,11 +41,5 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun navigateToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 }
