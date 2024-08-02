@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.rapidrescue.databinding.FragmentFetchUserDataBinding
+import com.example.rapidrescue.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -56,12 +57,12 @@ class FetchUserDataFragment : Fragment() {
             if (it.exists()){
                 for (userSnapshot in it.children) {
                     val name = userSnapshot.child("name").value
-                    val schId = userSnapshot.child("schNumber").value
-                    val phNumber = userSnapshot.child("phoneNumber").value
+                    val email = userSnapshot.child("email").value
+                    val phNumber = userSnapshot.child("phNumber").value
 
-                    binding.tvName.text = "Name : $name"
-                    binding.tvSchId.text = "Scholar ID : $schId"
-                    binding.tvPhone.text = "Phone Number : $phNumber"
+                    binding.tvName1.text = "Name : $name"
+                    binding.tvSchId1.text = "Scholar ID : $email"
+                    binding.tvPhone1.text = "Phone Number : $phNumber"
                 }
 
             }else{

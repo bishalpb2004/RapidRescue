@@ -47,8 +47,8 @@
         android:background="@color/adaptiveColor"
         app:shapeAppearanceOverlay="@style/roundimageview"
         android:orientation="horizontal"
-        android:layout_width="350dp"
-        android:layout_height="200sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center">
 
         <LinearLayout
@@ -71,7 +71,7 @@
                 android:layout_marginTop="20sp"
                 android:layout_margin="20dp"
                 android:layout_width="wrap_content"
-                android:text="Scholar ID"
+                android:text="Email"
                 android:textAlignment="center"
                 android:layout_height="wrap_content"/>
             <TextView
