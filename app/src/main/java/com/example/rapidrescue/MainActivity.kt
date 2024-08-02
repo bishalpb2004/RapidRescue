@@ -4,12 +4,10 @@ package com.example.rapidrescue
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -131,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.developers_page -> {
-                navigateToFragment(developers()) // Replace with your fragment class
+                findNavController(R.id.nav_host_fragment_activity_main).navigate(R.id.developers_btn)
             }
             R.id.weather_safety -> {
                 val intent = Intent(this, WeatherSafety::class.java)
@@ -143,23 +141,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
-    }
-
-    private fun navigateToFragment(fragment: Fragment) {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
-        if (currentFragment != null && currentFragment::class.java == fragment::class.java) {
-            // If the current fragment is the same as the one we want to navigate to, do nothing
-            return
-        }
-
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.setCustomAnimations(
-            android.R.anim.slide_in_left, // Enter animation
-            android.R.anim.slide_out_right // Exit animation
-        )
-
-        fragmentTransaction.replace(R.id.container, fragment)
-        fragmentTransaction.commit()
-        binding.navView.visibility = View.GONE
     }
 }

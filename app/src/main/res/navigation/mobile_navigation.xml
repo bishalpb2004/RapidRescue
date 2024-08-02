@@ -49,11 +49,6 @@
         android:label="RapidRescue"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_navigation_notifications_to_afterProfileFragment"
-            app:destination="@id/afterProfileFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
-        <action
             android:id="@+id/action_navigation_notifications_to_fetchUserDataFragment"
             app:destination="@id/fetchUserDataFragment"
             app:enterAnim="@android:anim/slide_in_left"
@@ -114,15 +109,7 @@
             app:enterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
     </fragment>
-    <fragment
-        android:id="@+id/afterProfileFragment"
-        android:name="com.example.rapidrescue.ui.AfterProfileFragment"
-        android:label="RapidRescue"
-        tools:layout="@layout/fragment_after_profile" >
-        <action
-            android:id="@+id/action_afterProfileFragment_to_navigation_notifications"
-            app:destination="@id/navigation_notifications" />
-    </fragment>
+
     <fragment
         android:id="@+id/instructionsFragment"
         android:name="com.example.rapidrescue.ui.Instructions.InstructionsFragment"
@@ -156,5 +143,11 @@
         android:id="@+id/OTPActivity"
         android:name="com.example.rapidrescue.Authentication.LoginActivity"
         android:label="OTPActivity" />
+
+    <fragment
+        android:id="@+id/developersFragment"
+        android:name="com.example.rapidrescue.developers"
+        android:label="Developers" />
+
 
 </navigation>
