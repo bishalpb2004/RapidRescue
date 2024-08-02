@@ -10,12 +10,21 @@ class RapidRescue : Application() {
         super.onCreate()
 
         // Initialize Firebase
-        FirebaseApp.initializeApp(this)
+        initializeFirebase()
 
         // Initialize Firebase App Check with the SafetyNet provider
+        initializeAppCheck()
+    }
+
+    private fun initializeFirebase() {
+        FirebaseApp.initializeApp(this)
+    }
+
+    private fun initializeAppCheck() {
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
         firebaseAppCheck.installAppCheckProviderFactory(
             SafetyNetAppCheckProviderFactory.getInstance()
         )
     }
 }
+
