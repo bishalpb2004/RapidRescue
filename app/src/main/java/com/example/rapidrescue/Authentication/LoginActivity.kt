@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rapidrescue.MainActivity
 import com.example.rapidrescue.R
-import com.example.rapidrescue.ui.home.HomeFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -67,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
                                     startActivity(Intent(this, MainActivity::class.java))
                                     //finish() // Finish LoginActivity to prevent going back to it
                                 }
-                                else-> Toast.makeText(this,"Please check your Gmail and Verify your smail id",Toast.LENGTH_LONG).show()
+                                else-> Toast.makeText(this,"Please check your Gmail and Verify your email id",Toast.LENGTH_LONG).show()
                             }
                         }
                         else{
