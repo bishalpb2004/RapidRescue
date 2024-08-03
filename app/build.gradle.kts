@@ -84,7 +84,6 @@ dependencies {
 
 
     //Animation gif
-    implementation("com.airbnb.android:lottie:6.0.0")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
     //For AI bot
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
@@ -122,5 +121,6 @@ dependencies {
     implementation("com.google.firebase:firebase-appcheck-playintegrity:18.0.0")
     implementation("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
 
-
+    //lottie
+    implementation("com.airbnb.android:lottie:6.4.0")
 }

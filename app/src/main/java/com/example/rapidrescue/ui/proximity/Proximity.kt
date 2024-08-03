@@ -9,10 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.airbnb.lottie.LottieAnimationView
 import com.example.rapidrescue.R
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -37,14 +40,12 @@ class Proximity : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var myLocationOverlay: MyLocationNewOverlay
     private lateinit var progressBar: ProgressBar
+    private lateinit var loadingContainer: LinearLayout
+    private lateinit var blurView: View
+    private lateinit var loadingText: TextView
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
-    private val DEFAULT_ZOOM_LEVEL = 6.0
+    private val DEFAULT_ZOOM_LEVEL = 15
     private val USER_AGENT = "YOUR_APP_NAME"
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Configuration.getInstance().load(requireContext(), requireContext().getSharedPreferences("osmdroid", Context.MODE_PRIVATE))
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_proximity, container, false)
@@ -53,7 +54,10 @@ class Proximity : Fragment() {
         mapView.setTileSource(TileSourceFactory.MAPNIK)
         myLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(requireContext()), mapView)
         mapView.overlays.add(myLocationOverlay)
-        progressBar = view.findViewById(R.id.progress_bar)
+        progressBar = view.findViewById(R.id.progressBar)
+        blurView = view.findViewById(R.id.blur_view)
+        loadingText = view.findViewById(R.id.loading_text)
+        loadingContainer = view.findViewById(R.id.loading_container)
         return view
     }
 
@@ -62,6 +66,11 @@ class Proximity : Fragment() {
         requestLocationPermission()
         view.findViewById<Button>(R.id.btnClinic).setOnClickListener { showNearbyPlaces("clinic") }
         view.findViewById<Button>(R.id.btnHospital).setOnClickListener { showNearbyPlaces("hospital") }
+    }
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+        val repository = mapView.repository
     }
 
     private fun requestLocationPermission() {
@@ -74,9 +83,11 @@ class Proximity : Fragment() {
 
     private fun enableMyLocation() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            showLoading()
             myLocationOverlay.enableMyLocation()
             myLocationOverlay.runOnFirstFix {
                 activity?.runOnUiThread {
+                    hideLoading()
                     val myLocation = myLocationOverlay.myLocation
                     if (myLocation != null) {
                         mapView.controller.setZoom(15.0)
@@ -84,7 +95,6 @@ class Proximity : Fragment() {
                     } else {
                         mapView.controller.setZoom(DEFAULT_ZOOM_LEVEL)
                     }
-                    progressBar.visibility = View.GONE
                 }
             }
         }
@@ -98,13 +108,13 @@ class Proximity : Fragment() {
                     Log.d("Proximity", "Current location is not available.")
                     return
                 }
-                progressBar.visibility = View.VISIBLE
+                showLoading()
                 val start = GeoPoint(location.latitude, location.longitude)
 
                 thread {
                     val nearbyPlaces = findNearbyPlaces(start, placeType)
                     activity?.runOnUiThread {
-                        progressBar.visibility = View.GONE
+                        hideLoading()
                         mapView.overlays.removeAll { it !is MyLocationNewOverlay }
                         if (nearbyPlaces.isNotEmpty()) {
                             for (place in nearbyPlaces) {
@@ -170,8 +180,7 @@ class Proximity : Fragment() {
         val roadManager = OSRMRoadManager(requireContext(), USER_AGENT)
         val waypoints = arrayListOf(start, end)
 
-        // Show loading indicator
-        progressBar.visibility = View.VISIBLE
+        showLoading()
 
         thread {
             val road = roadManager.getRoad(waypoints)
@@ -179,9 +188,7 @@ class Proximity : Fragment() {
                 Log.e("Proximity", "Error calculating the road: ${road.mStatus}")
             }
             activity?.runOnUiThread {
-                // Hide loading indicator
-                progressBar.visibility = View.GONE
-
+                hideLoading()
                 mapView.overlays.removeAll { it is Polyline }
                 val roadOverlay = RoadManager.buildRoadOverlay(road)
                 mapView.overlays.add(roadOverlay)
@@ -190,10 +197,21 @@ class Proximity : Fragment() {
         }
     }
 
+    private fun showLoading() {
+        loadingContainer.visibility = View.VISIBLE
+        blurView.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading() {
+        loadingContainer.visibility = View.GONE
+        blurView.visibility = View.GONE
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             enableMyLocation()
         }
     }
+
 }
