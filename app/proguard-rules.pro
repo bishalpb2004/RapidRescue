@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Preserve the User data class and its fields
+-keep class com.example.rapidrescue.Authentication.User {
+    <fields>;
+    <init>(...);
+}
