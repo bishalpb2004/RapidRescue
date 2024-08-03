@@ -25,3 +25,117 @@
     <fields>;
     <init>(...);
 }
+
+# News Fragment fixed
+-keep class com.example.rapidrescue.ui.News.News {
+<fields>;
+<init>(...);
+}
+
+-keep class com.example.rapidrescue.ui.News.NewsAdapter {
+<fields>;
+<init>(...);
+}
+
+-keep class com.example.rapidrescue.ui.News.NewsAPI {
+<fields>;
+<init>(...);
+}
+
+-keep class com.example.rapidrescue.ui.News.NewsFragment {
+<fields>;
+<init>(...);
+}
+
+-keep class com.example.rapidrescue.ui.News.NewsRepository {
+<fields>;
+<init>(...);
+}
+
+-keep class com.example.rapidrescue.ui.News.NewsResponse {
+<fields>;
+<init>(...);
+}
+
+-keep class com.example.rapidrescue.ui.News.NewsViewModel {
+<fields>;
+<init>(...);
+}
+
+-keep class com.example.rapidrescue.ui.News.OnItemClickListener {
+<fields>;
+<init>(...);
+}
+
+-keep class com.example.rapidrescue.ui.News.RetrofitInstance {
+<fields>;
+<init>(...);
+}
+
+# Weather fixed
+# Keep RetrofitInstance class and its methods
+-keep class com.example.rapidrescue.ui.WeatherSafety.RetrofitInstance {
+    <fields>;
+    <init>(...);
+    *;
+}
+
+# Keep WeatherAdapter class and its methods
+-keep class com.example.rapidrescue.ui.WeatherSafety.WeatherAdapter {
+    <fields>;
+    <init>(...);
+    *;
+}
+
+# Keep WeatherApiService interface and its methods
+-keep interface com.example.rapidrescue.ui.WeatherSafety.WeatherApiService {
+    <methods>;
+}
+
+# Keep WeatherRepository class and its methods
+-keep class com.example.rapidrescue.ui.WeatherSafety.WeatherRepository {
+    <fields>;
+    <init>(...);
+    *;
+}
+
+# Keep WeatherResponse class and its fields, constructors, and methods
+-keep class com.example.rapidrescue.ui.WeatherSafety.WeatherResponse {
+    <fields>;
+    <init>(...);
+    *;
+}
+
+# Keep WeatherSafety class and its methods
+-keep class com.example.rapidrescue.ui.WeatherSafety.WeatherSafety {
+    <fields>;
+    <init>(...);
+    *;
+}
+
+# Keep WeatherViewModel class and its methods
+-keep class com.example.rapidrescue.ui.WeatherSafety.WeatherViewModel {
+    <fields>;
+    <init>(...);
+    *;
+}
+
+# Keep all models used by Retrofit and Gson
+-keep class com.example.rapidrescue.ui.WeatherSafety.** {
+    *;
+}
+
+# Keep Retrofit annotations and Gson annotations
+-keepattributes Signature, *Annotation*
+
+# Keep Retrofit classes
+-keep class retrofit2.** { *; }
+-keep interface retrofit2.** { *; }
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+
+# Keep Gson classes
+-keep class com.google.gson.** { *; }
+-keep interface com.google.gson.** { *; }
+
+
