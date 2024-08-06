@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.rapidrescue"
+    namespace = "com.parthiv.rapidrescue"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.rapidrescue"
+        applicationId = "com.parthiv.rapidrescue"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
