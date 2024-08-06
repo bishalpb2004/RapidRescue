@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.google.rapidrescue"
+    namespace = "com.example.rapidrescue"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.google.rapidrescue"
+        applicationId = "com.example.rapidrescue"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -22,6 +22,7 @@ android {
     buildTypes {
         debug {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
