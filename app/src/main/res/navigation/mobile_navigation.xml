@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.rapidrescue.ui.home.HomeFragment"
+        android:name="com.parthiv.rapidrescue.ui.home.HomeFragment"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_home" >
         <action
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.rapidrescue.ui.News.NewsFragment"
+        android:name="com.parthiv.rapidrescue.ui.News.NewsFragment"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_news" >
         <action
@@ -45,7 +45,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.rapidrescue.ui.profile.ProfileFragment"
+        android:name="com.parthiv.rapidrescue.ui.profile.ProfileFragment"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -62,7 +62,7 @@
 
     <fragment
         android:id="@+id/registeredNumbersFragment"
-        android:name="com.example.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment"
+        android:name="com.parthiv.rapidrescue.ui.RegisteredNumbers.RegisteredNumbersFragment"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_registered_numbers" >
         <action
@@ -90,7 +90,7 @@
     </fragment>
     <dialog
         android:id="@+id/popUpFragment"
-        android:name="com.example.rapidrescue.ui.PopUpFragment"
+        android:name="com.parthiv.rapidrescue.ui.PopUpFragment"
         android:label="PopUpFragment" >
         <action
             android:id="@+id/action_popUpFragment_to_navigation_home"
@@ -100,7 +100,7 @@
     </dialog>
     <fragment
         android:id="@+id/SOSMessageFragment"
-        android:name="com.example.rapidrescue.ui.SOSMessage.SOSMessage"
+        android:name="com.parthiv.rapidrescue.ui.SOSMessage.SOSMessage"
         android:label="SOSMessageFragment"
         tools:layout="@layout/fragment_s_o_s_message">
         <action
@@ -112,23 +112,23 @@
 
     <fragment
         android:id="@+id/instructionsFragment"
-        android:name="com.example.rapidrescue.ui.Instructions.InstructionsFragment"
+        android:name="com.parthiv.rapidrescue.ui.Instructions.InstructionsFragment"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_instructions"/>
     <fragment
         android:id="@+id/fetchUserDataFragment"
-        android:name="com.example.rapidrescue.ui.FetchUserDataFragment"
+        android:name="com.parthiv.rapidrescue.ui.FetchUserDataFragment"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_fetch_user_data" />
 
     <fragment
         android:id="@+id/navigation_chatbot"
-        android:name="com.example.rapidrescue.ui.proximity.Proximity"
+        android:name="com.parthiv.rapidrescue.ui.proximity.Proximity"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_proximity"/>
     <fragment
         android:id="@+id/developers_btn"
-        android:name="com.example.rapidrescue.developers"
+        android:name="com.parthiv.rapidrescue.developers"
         android:label="RapidRescue"
         tools:layout="@layout/fragment_developers">
         <action
@@ -141,12 +141,12 @@
     </fragment>
     <activity
         android:id="@+id/OTPActivity"
-        android:name="com.example.rapidrescue.Authentication.LoginActivity"
+        android:name="com.parthiv.rapidrescue.Authentication.LoginActivity"
         android:label="OTPActivity" />
 
     <fragment
         android:id="@+id/developersFragment"
-        android:name="com.example.rapidrescue.developers"
+        android:name="com.parthiv.rapidrescue.developers"
         android:label="Developers" />
 
 
