@@ -1,6 +1,6 @@
 # RapidRescue: Your Pocket Emergency App
 
-![RapidRescue Logo](drawable/our_logo_header.png)
+![RapidRescue Logo](app/src/main/res/drawable/our_logo11.png)
 
 **RapidRescue** is your ultimate pocket emergency app designed to keep you safe and informed at all times. Whether you're facing an unexpected emergency, need real-time weather updates, or want to stay prepared with essential safety knowledge, RapidRescue has got you covered.
 
